@@ -1,0 +1,39 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-dylan-mall               # 主题唯一标识
+spec:
+  displayName: Dylan · 上悦汇商业主题
+  author:
+    name: Dylan
+    website: https://your-domain.com
+  description: 商业综合体企业官网主题（上悦汇定制版）
+  logo: /themes/theme-dylan-mall/assets/images/logo/logo.png   # 指向你的图标
+  homepage: https://your-domain.com
+  repo: https://your-repo-url.com
+  issues: https://your-repo-url.com/issues
+
+  # 改为新主题专用的配置存储名称
+  settingName: "theme-dylan-mall-setting"
+  configMapName: "theme-dylan-mall-configMap"
+
+  version: 2.1.0
+  requires: ">=2.22.0"
+
+  license:
+    - name: "GPL-3.0"
+      url: "https://github.com/halo-dev/theme-earth/blob/main/LICENSE"
+  customTemplates:
+    page:
+      - name: 核心业务
+        description: 四大业务板块详情页
+        file: syh-business.html
+      - name: 新闻动态
+        description: 文章列表，支持分类/标签/分页
+        file: syh-news.html
+      - name: 关于我们
+        description: 集团简介、发展历程、大湾区布局
+        file: syh-about.html
+      - name: 联系我们
+        description: 联系方式与合作咨询表单
+        file: syh-contact.html

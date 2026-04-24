@@ -1,0 +1,1829 @@
+﻿apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-dylan-mall-setting      # 与 theme.yaml 中的 settingName 一致
+spec:
+  forms:
+  # ==================== 主页 (syh) ====================
+  - group: syh
+    label: 主页
+    formSchema:
+      # Hero 区
+      - $formkit: group
+        name: hero
+        label: Hero 区（首页顶部大图区域）
+        expanded: true
+        children:
+          - $formkit: attachment
+            name: bg_image
+            label: 背景图片
+            help: 建议尺寸 1920x1080 以上，重点内容居中，图片将自动压暗处理。此图片将作为首页 Hero 区域背景。
+            value: /themes/theme-dylan-mall/assets/images/company/mall-night.jpg
+          - $formkit: text
+            name: eyebrow
+            label: 小标题
+            help: 显示在 Hero 区域顶部，建议 8-12 个汉字，起到画龙点睛作用。
+            value: 粤港澳大湾区商业运营专家
+          - $formkit: text
+            name: title
+            label: 主标题行1（白色）
+            help: 第一行主标题，建议 6-8 个汉字，与第二行配合。
+            value: 深耕十四年
+          - $formkit: text
+            name: title2
+            label: 主标题行2（金色）
+            help: 第二行主标题，建议 6-8 个汉字，颜色为金色，与第一行形成对比。
+            value: 铸就湾区商业新格局
+          - $formkit: textarea
+            rows: 2
+            name: desc
+            label: 描述文字
+            help: Hero 区域的描述文字，建议 30-60 字，简要介绍企业。
+            value: 集房地产开发、农产品批发、商业运营、娱乐传媒于一体的综合性民营企业集团，构建覆盖深圳、东莞、揭阳、惠州的战略商业版图。
+          - $formkit: text
+            name: btn1_text
+            label: 按钮1文字
+            help: 左侧主按钮文字，建议 4-6 个字。
+            value: 了解集团 →
+          - $formkit: text
+            name: btn1_url
+            label: 按钮1链接
+            help: 按钮跳转地址，可使用相对路径（如 /about）或完整 URL。
+            value: /about
+          - $formkit: text
+            name: btn2_text
+            label: 按钮2文字
+            help: 右侧辅助按钮文字，建议 4-6 个字。
+            value: 商务合作
+          - $formkit: text
+            name: btn2_url
+            label: 按钮2链接
+            help: 按钮跳转地址。
+            value: /contact
+
+      # 统计数据区（主页独立）
+      - $formkit: group
+        name: stats
+        label: 统计数据区（主页独立）
+        expanded: true
+        children:
+          - $formkit: text
+            name: num1
+            label: 数字1
+            help: 显示在统计卡片上的数字，建议纯数字。
+            value: '16'
+          - $formkit: text
+            name: unit1
+            label: 单位1
+            help: 数字后面的单位，如“年”“万+㎡”等。
+            value: 年
+          - $formkit: text
+            name: label1
+            label: 说明1
+            help: 数字下方的说明文字，建议 6-10 个字。
+            value: 行业深耕经验
+          - $formkit: text
+            name: num2
+            label: 数字2
+            value: '13'
+          - $formkit: text
+            name: unit2
+            label: 单位2
+            value: 万+㎡
+          - $formkit: text
+            name: label2
+            label: 说明2
+            value: 自有物业面积
+          - $formkit: text
+            name: num3
+            label: 数字3
+            value: '3000'
+          - $formkit: text
+            name: unit3
+            label: 单位3
+            value: +
+          - $formkit: text
+            name: label3
+            label: 说明3
+            value: 合作品牌商户
+          - $formkit: text
+            name: num4
+            label: 数字4
+            value: '99'
+          - $formkit: text
+            name: unit4
+            label: 单位4
+            value: '%'
+          - $formkit: text
+            name: label4
+            label: 说明4
+            value: 出租率
+
+      # 核心业务区（首页磁贴）
+      - $formkit: group
+        name: biz
+        label: 核心业务区（首页磁贴）标题与按钮
+        expanded: true
+        children:
+          - $formkit: text
+            name: section_eyebrow
+            label: 区块小标题
+            help: 显示在核心业务区顶部的小标题，建议 6-8 个字。
+            value: 核心业务板块
+          - $formkit: text
+            name: section_title
+            label: 主标题
+            help: 核心业务区的主标题，建议 8-12 个字。
+            value: 四大引擎，协同共生
+          - $formkit: text
+            name: btn_text
+            label: 按钮文字
+            help: 右侧“查看全部业务”按钮的文字。
+            value: 查看全部业务 →
+          - $formkit: text
+            name: btn_url
+            label: 按钮链接
+            help: 按钮跳转地址，一般指向核心业务页面。
+            value: /business
+
+      # 主页核心业务磁贴（独立配置，8个）
+      - $formkit: group
+        name: home_tiles
+        label: 主页核心业务磁贴（8个）
+        expanded: true
+        help: 配置主页上显示的8个核心业务磁贴（建议保持8个以匹配布局）。每个磁贴包含图片、编号、标题、描述和链接。
+        children:
+          - $formkit: repeater
+            name: tiles
+            label: 磁贴列表
+            help: 可添加最多8个磁贴，建议保持8个以保持布局美观。
+            value:
+              - img: /themes/theme-dylan-mall/assets/images/company/mall-night.jpg
+                num: 01 / SHOPPING MALL
+                title: 商业综合体运营
+                desc: 8万㎡ · 5.8万㎡
+                link: /business#mall
+              - img: /themes/theme-dylan-mall/assets/images/company/market.jpg
+                num: 02 / WHOLESALE
+                title: 农产品批发运营
+                desc: 4大市场 · 12万㎡
+                link: /business#market
+              - img: /themes/theme-dylan-mall/assets/images/company/cinema.jpg
+                num: 03 / CINEMA
+                title: 上悦汇影城
+                desc: 4K激光巨幕 · 旗舰3000㎡
+                link: /business#cinema
+              - img: /themes/theme-dylan-mall/assets/images/company/entertainment.jpg
+                num: 04 / ENTERTAINMENT
+                title: 嗨客玩家电玩
+                desc: 1000㎡ · 电玩融合
+                link: /business#entertainment
+              - img: /themes/theme-dylan-mall/assets/images/company/mall-night.jpg
+                num: 05 / NEW BUSINESS
+                title: 新业务板块5
+                desc: 即将上线
+                link: /contact
+              - img: /themes/theme-dylan-mall/assets/images/company/market.jpg
+                num: 06 / NEW BUSINESS
+                title: 新业务板块6
+                desc: 即将上线
+                link: /contact
+              - img: /themes/theme-dylan-mall/assets/images/company/cinema.jpg
+                num: 07 / NEW BUSINESS
+                title: 新业务板块7
+                desc: 即将上线
+                link: /contact
+              - img: /themes/theme-dylan-mall/assets/images/company/entertainment.jpg
+                num: 08 / NEW BUSINESS
+                title: 新业务板块8
+                desc: 即将上线
+                link: /contact
+            children:
+              - $formkit: attachment
+                name: img
+                label: 图片
+                help: 建议尺寸 1920x1080 以上，图片将裁剪为 16:9 比例显示。
+                value: ''
+              - $formkit: text
+                name: num
+                label: 编号/标签
+                help: 显示在图片上方的编号或英文标签，如“01 / SHOPPING MALL”，建议 15-20 字符。
+                value: ''
+              - $formkit: text
+                name: title
+                label: 标题
+                help: 磁贴主标题，建议 6-10 个汉字。
+                value: ''
+              - $formkit: text
+                name: desc
+                label: 描述
+                help: 磁贴描述文字，建议 10-15 个汉字，可包含数字和符号。
+                value: ''
+              - $formkit: text
+                name: link
+                label: 跳转链接
+                help: 点击磁贴跳转的地址，可使用锚点（如 /business#mall）或完整 URL。
+                value: ''
+
+      # 优势区（可动态增删）
+      - $formkit: group
+        name: why
+        label: 优势区
+        expanded: true
+        children:
+          - $formkit: text
+            name: eyebrow
+            label: 区块小标题
+            help: 优势区顶部小标题，建议 6-8 个字。
+            value: 为什么选择我们
+          - $formkit: text
+            name: title
+            label: 主标题
+            help: 优势区主标题，建议 8-12 个字。
+            value: 16年积累，实力见证
+          - $formkit: repeater
+            name: items
+            label: 优势条目
+            help: 可添加任意数量的优势卡片，每个卡片包含图标（Emoji）、标题、描述。
+            value:
+              - icon: 🏆
+                title: 深厚行业积淀
+                desc: 自2009年成立，16年专注商业运营，团队成员来自万达、保利、茂业、华润等知名企业，拥有丰富实战经验。
+              - icon: 🗺️
+                title: 大湾区战略布局
+                desc: 深耕东莞、深圳，辐射揭阳、惠州，在粤港澳大湾区建立了覆盖四城的强大商业网络，战略布局领先同业。
+              - icon: 📊
+                title: 卓越运营指标
+                desc: 13万+㎡自有物业，99%出租率，3000+合作品牌商户，97%+招商满铺率，各项运营数据均处于行业领先水平。
+              - icon: 🎯
+                title: 多元业态布局
+                desc: 覆盖购物中心、农产品批发、影院娱乐、电玩体验等多元业态，形成完整的一站式商业消费生态闭环。
+              - icon: 🤝
+                title: 优质品牌矩阵
+                desc: 与永辉超市、星巴克、肯德基、周大福、老凤祥等3000+知名品牌商户建立长期深度合作，品牌号召力强。
+              - icon: 🚀
+                title: 持续创新发展
+                desc: 积极布局社区体验式商业、会员矩阵营销、场景化购物娱乐等新兴商业模式，引领区域商业创新升级。
+            children:
+              - $formkit: text
+                name: icon
+                label: 图标（Emoji或Boxicons）
+                help: 可使用 Emoji（如 🏆）或 Boxicons 类名（如 bx-trophy），建议使用 Emoji 简单通用。
+                value: ''
+              - $formkit: text
+                name: title
+                label: 标题
+                help: 优势卡片标题，建议 6-10 个字。
+                value: ''
+              - $formkit: textarea
+                rows: 2
+                name: desc
+                label: 描述
+                help: 优势卡片描述，建议 40-80 字，简要阐述优势。
+                value: ''
+
+      # 合作品牌区
+      - $formkit: group
+        name: brands
+        label: 合作品牌区
+        expanded: true
+        children:
+          - $formkit: text
+            name: count
+            label: 数量大字
+            help: 显示在顶部的大数字，如“3000+”，用于强调品牌数量。
+            value: 3000+
+          - $formkit: text
+            name: title
+            label: 副标题
+            help: 大数字下方的标题，建议 10-15 个字。
+            value: 优质合作品牌商户共同见证
+          - $formkit: text
+            name: subtitle_text
+            label: 小标题文字（与数字拼接）
+            help: 与数字拼接的小标题，如“合作品牌商户”，形成“3000+ 合作品牌商户”。
+            value: 合作品牌商户
+          - $formkit: repeater
+            name: items
+            label: 品牌列表
+            help: 可添加任意品牌名称，将展示为单行滚动列表。每个品牌名建议不超过 20 个字符。
+            value:
+              - name: 永辉超市
+              - name: 星巴克 Starbucks
+              - name: 肯德基 KFC
+              - name: 周大福
+              - name: 六福珠宝
+              - name: 老凤祥
+              - name: 屈臣氏
+              - name: 比亚迪
+              - name: YH BRAVO
+              - name: 永旺莫莉幻想
+              - name: 任宿鹅城
+              - name: 苹果魅友
+              - name: 麦当劳
+              - name: 必胜客
+              - name: 国美电器
+              - name: 华润万家
+            children:
+              - $formkit: text
+                name: name
+                label: 品牌名称
+                help: 品牌名称，建议不超过 20 个字符，过长可能影响滚动显示。
+                value: ''
+
+      # CTA 区
+      - $formkit: group
+        name: cta
+        label: CTA 区（行动号召区域）
+        expanded: true
+        children:
+          - $formkit: checkbox
+            name: show_cta
+            label: 显示 CTA 区
+            help: 关闭后整个 CTA 区块将不显示。
+            value: false
+          - $formkit: attachment
+            name: bg
+            label: 背景图片
+            help: 建议尺寸 1920x800 以上，图片将做暗色处理。
+            value: /themes/theme-dylan-mall/assets/images/company/mall-render.jpg
+          - $formkit: text
+            name: eyebrow
+            label: 小标题
+            help: 显示在 CTA 区域顶部，建议 6-8 个字。
+            value: 精诚合作 · 携手共赢
+          - $formkit: text
+            name: title
+            label: 主标题
+            help: CTA 区域主标题，建议 10-15 个字。
+            value: 期待与您携手，共筑未来
+          - $formkit: text
+            name: sub
+            label: 副标题
+            help: 主标题下方的说明文字，建议 15-25 个字。
+            value: 共同开创华南区商业运营新篇章
+          - $formkit: text
+            name: btn1_text
+            label: 按钮1文字
+            help: 左侧按钮文字，建议 6-10 个字。
+            value: 立即联系我们 →
+          - $formkit: text
+            name: btn1_url
+            label: 按钮1链接
+            help: 按钮跳转地址。
+            value: /contact
+          - $formkit: text
+            name: btn2_text
+            label: 按钮2文字
+            help: 右侧按钮文字，建议 6-10 个字。
+            value: 了解集团详情
+          - $formkit: text
+            name: btn2_url
+            label: 按钮2链接
+            help: 按钮跳转地址。
+            value: /about
+
+  # ==================== 核心业务页 (syh_business) ====================
+  - group: syh_business
+    label: 核心业务
+    formSchema:
+      # Hero 区
+      - $formkit: group
+        name: hero
+        label: Hero 区（页面顶部区域）
+        expanded: true
+        children:
+          - $formkit: attachment
+            name: bg
+            label: 背景图片
+            help: 建议尺寸 1920x800 以上，图片将做暗色处理。
+            value: /themes/theme-dylan-mall/assets/images/company/mall-night.jpg
+          - $formkit: text
+            name: eyebrow
+            label: 英文小标题
+            help: 显示在顶部的小标题，一般用英文，如“Core Business”。
+            value: Core Business
+          - $formkit: text
+            name: title_white
+            label: 主标题白色部分
+            help: 页面主标题的白色部分，如“核心”。
+            value: 核心
+          - $formkit: text
+            name: title_gold
+            label: 主标题金色部分
+            help: 页面主标题的金色部分，如“业务板块”。
+            value: 业务板块
+
+      # 业务板块列表（可动态增删）
+      - $formkit: group
+        name: items
+        label: 业务板块列表
+        expanded: true
+        children:
+          - $formkit: repeater
+            name: list
+            label: 业务板块条目
+            help: 可添加、删除、排序任意数量的业务板块。每个板块包含图片、标题、描述、指标等。
+            value:
+              - img: /themes/theme-dylan-mall/assets/images/company/mall-night.jpg
+                eyebrow: 核心业务 · 01
+                title: 商业综合体
+                title_gold: 运营管理
+                label: Shopping Mall
+                desc1: 以打造区域商业标杆为目标，运营管理东莞上悦汇购物中心（8万㎡）和深圳兴万达广场（5.8万㎡）两大旗舰项目，总面积超13万㎡，年总销售额达7.5亿元。
+                desc2: 通过精准招商、场景营造和活动运营，持续提升商业活力，与3000+知名品牌建立长期合作关系，实现区域消费升级。
+                m1_num: 8万㎡
+                m1_label: 东莞旗舰
+                m2_num: 5.8万㎡
+                m2_label: 深圳项目
+                m3_num: 7.5亿
+                m3_label: 年总销售额
+                m4_num: 3000+
+                m4_label: 合作品牌
+                btn_text: ''
+                btn_url: /contact
+              - img: /themes/theme-dylan-mall/assets/images/company/market.jpg
+                eyebrow: 核心业务 · 02
+                title: 农产品批发
+                title_gold: 市场运营
+                label: 壹贰宝儿童成长中心
+                desc1: 运营管理4大农产品批发市场，总面积12万㎡，构建辐射8省的物流配送网络，是大湾区重要的农产品集散中心。
+                desc2: 引入现代化管理体系，推进数字化转型，为农产品从产地到餐桌提供高效、安全的供应链保障。
+                m1_num: '4'
+                m1_label: 大批发市场
+                m2_num: 12万㎡
+                m2_label: 总运营面积
+                m3_num: 8省
+                m3_label: 物流辐射范围
+                m4_num: 数字化
+                m4_label: 现代管理体系
+                btn_text: ''
+                btn_url: /contact
+              - img: /themes/theme-dylan-mall/assets/images/company/cinema.jpg
+                eyebrow: 核心业务 · 03
+                title: 上悦汇影城
+                title_gold: 娱乐传媒
+                label: Cinema
+                desc1: 旗下上悦汇影城以高品质观影体验为核心竞争力，配备4K激光巨幕放映系统，东莞旗舰店面积3000㎡，票房长期位居全市前十。
+                desc2: 揭阳新店（3600㎡）已完成选址规划，预计将成为汕潮揭都市圈的旗舰影城，进一步强化集团在华南地区的娱乐传媒布局。
+                m1_num: 3000㎡
+                m1_label: 东莞旗舰店
+                m2_num: 4K
+                m2_label: 激光巨幕
+                m3_num: 前十
+                m3_label: 全市票房排名
+                m4_num: 3600㎡
+                m4_label: 揭阳新店（筹）
+                btn_text: ''
+                btn_url: /contact
+              - img: /themes/theme-dylan-mall/assets/images/company/entertainment.jpg
+                eyebrow: 核心业务 · 04
+                title: 嗨客玩家
+                title_gold: 电玩中心
+                label: Entertainment
+                desc1: 嗨客玩家电玩中心是集团自营的创新娱乐品牌，以1000㎡的宽敞空间融合电竞体验和传统电玩，打造面向年轻群体和亲子家庭的综合娱乐目的地。
+                desc2: 通过不断引进前沿娱乐设备和创新运营模式，成为购物中心娱乐业态的引流核心，有效提升整体商业项目的客流活跃度。
+                m1_num: 1000㎡
+                m1_label: 中心面积
+                m2_num: 电竞+
+                m2_label: 电玩融合
+                m3_num: 亲子
+                m3_label: 家庭娱乐
+                m4_num: 社交
+                m4_label: 年轻人基地
+                btn_text: ''
+                btn_url: /contact
+            children:
+              - $formkit: attachment
+                name: img
+                label: 图片
+                help: 建议尺寸 1200x900 以上，图片将裁剪为 4:3 比例显示。
+                value: ''
+              - $formkit: text
+                name: eyebrow
+                label: 小标题
+                help: 板块上方的小标题，如“核心业务 · 01”，建议 10-15 字符。
+                value: ''
+              - $formkit: text
+                name: title
+                label: 标题白色部分
+                help: 板块主标题的白色部分，建议 4-8 个字。
+                value: ''
+              - $formkit: text
+                name: title_gold
+                label: 标题金色部分
+                help: 板块主标题的金色部分，建议 4-8 个字。
+                value: ''
+              - $formkit: text
+                name: label
+                label: 图片标签
+                help: 显示在图片上的标签，如“Shopping Mall”，建议 10-20 字符。
+                value: ''
+              - $formkit: textarea
+                rows: 2
+                name: desc1
+                label: 描述段落1
+                help: 第一段描述文字，建议 50-100 字，介绍业务详情。
+                value: ''
+              - $formkit: textarea
+                rows: 2
+                name: desc2
+                label: 描述段落2
+                help: 第二段描述文字，建议 30-80 字，可补充说明。
+                value: ''
+              - $formkit: text
+                name: m1_num
+                label: 指标1数值
+                help: 第一个指标的数字部分，如“8万㎡”。
+                value: ''
+              - $formkit: text
+                name: m1_label
+                label: 指标1说明
+                help: 第一个指标的说明文字，如“东莞旗舰”。
+                value: ''
+              - $formkit: text
+                name: m2_num
+                label: 指标2数值
+                value: ''
+              - $formkit: text
+                name: m2_label
+                label: 指标2说明
+                value: ''
+              - $formkit: text
+                name: m3_num
+                label: 指标3数值
+                value: ''
+              - $formkit: text
+                name: m3_label
+                label: 指标3说明
+                value: ''
+              - $formkit: text
+                name: m4_num
+                label: 指标4数值
+                value: ''
+              - $formkit: text
+                name: m4_label
+                label: 指标4说明
+                value: ''
+              - $formkit: text
+                name: btn_text
+                label: 按钮文字（留空不显示）
+                help: 可选的按钮文字，留空则不显示按钮。
+                value: ''
+              - $formkit: text
+                name: btn_url
+                label: 按钮链接
+                help: 按钮跳转地址。
+                value: ''
+
+      # CTA 区
+      - $formkit: group
+        name: cta
+        label: CTA 区（行动号召区域）
+        expanded: true
+        children:
+          - $formkit: checkbox
+            name: show_cta
+            label: 显示 CTA 区
+            help: 关闭后整个 CTA 区块将不显示。
+            value: false
+          - $formkit: attachment
+            name: bg
+            label: 背景图片
+            help: 建议尺寸 1920x800 以上，图片将做暗色处理。
+            value: /themes/theme-dylan-mall/assets/images/company/mall-render.jpg
+          - $formkit: text
+            name: eyebrow
+            label: 小标题
+            help: 显示在 CTA 区域顶部，建议 6-8 个字。
+            value: 商务合作
+          - $formkit: text
+            name: title
+            label: 标题
+            help: CTA 区域主标题，建议 10-15 个字。
+            value: 有意合作？欢迎联系我们
+          - $formkit: text
+            name: sub
+            label: 副标题
+            help: 主标题下方的说明文字，建议 15-25 个字。
+            value: 期待与您展开深度合作，共创商业新价值
+          - $formkit: text
+            name: btn1_text
+            label: 按钮1文字
+            help: 左侧按钮文字，建议 6-10 个字。
+            value: 立即联系 →
+          - $formkit: text
+            name: btn1_url
+            label: 按钮1链接
+            help: 按钮跳转地址。
+            value: /contact
+          - $formkit: text
+            name: btn2_text
+            label: 按钮2文字
+            help: 右侧按钮文字，建议 6-10 个字。
+            value: 了解集团
+          - $formkit: text
+            name: btn2_url
+            label: 按钮2链接
+            help: 按钮跳转地址。
+            value: /about
+
+  # ==================== 新闻动态页 (syh_news) ====================
+  - group: syh_news
+    label: 新闻动态
+    formSchema:
+      # Hero 区
+      - $formkit: group
+        name: hero
+        label: Hero 区
+        expanded: true
+        children:
+          - $formkit: attachment
+            name: bg
+            label: 背景图片
+            value: /themes/theme-dylan-mall/assets/images/company/mall-render.jpg
+          - $formkit: text
+            name: title_white
+            label: 主标题白色部分
+            value: 新闻
+          - $formkit: text
+            name: title_gold
+            label: 主标题金色部分
+            value: 动态
+
+      # 筛选与归档
+      - $formkit: group
+        name: filter
+        label: 筛选与归档
+        expanded: true
+        children:
+          - $formkit: text
+            name: all_text
+            label: 分类筛选“全部”按钮文字
+            value: 全部动态
+          - $formkit: text
+            name: all_news_btn_text
+            label: '全部动态按钮文字（分类/标签页面）'
+            help: 分类和标签页面中全部动态按钮的文字，默认为全部动态。
+            value: 全部动态
+          - $formkit: text
+            name: all_news_btn_url
+            label: '全部动态按钮链接（分类/标签页面）'
+            help: 分类和标签页面中全部动态按钮的跳转链接，默认为 /archives。
+            value: /archives
+          - $formkit: text
+            name: archive_btn_text
+            label: 归档按钮文字
+            value: 查看全部归档 →
+          - $formkit: text
+            name: archive_btn_url
+            label: 归档按钮链接
+            value: /archives
+          - $formkit: text
+            name: sidebar_archive_text
+            label: 侧边栏归档按钮文字
+            value: 查看全部归档 →
+          - $formkit: text
+            name: sidebar_archive_url
+            label: 侧边栏归档按钮链接
+            value: /archives
+
+      # 侧边栏设置
+      - $formkit: group
+        name: sidebar
+        label: 侧边栏设置
+        expanded: true
+        children:
+          - $formkit: checkbox
+            name: show_categories
+            label: 显示“文章分类”模块
+            value: true
+          - $formkit: text
+            name: categories_title
+            label: “文章分类”标题
+            value: 文章分类
+          - $formkit: checkbox
+            name: show_recent
+            label: 显示“最新动态”模块
+            value: true
+          - $formkit: text
+            name: recent_title
+            label: “最新动态”标题
+            value: 最新动态
+          - $formkit: checkbox
+            name: show_tags
+            label: 显示“标签云”模块
+            value: true
+          - $formkit: text
+            name: tags_title
+            label: “标签云”标题
+            value: 标签云
+          - $formkit: checkbox
+            name: show_archive
+            label: 显示“历史归档”模块
+            value: true
+          - $formkit: text
+            name: archive_title
+            label: “历史归档”标题
+            value: 历史归档
+
+      # 额外配置
+      - $formkit: group
+        name: extra
+        label: 额外配置
+        expanded: true
+        children:
+          - $formkit: text
+            name: news_page_slug
+            label: 新闻动态页面Slug
+            value: /archives
+            help: 当别名与Halo重复时冲突会404，请确认当前配置与页面别名的唯一性。
+
+  # ==================== 关于我们页 (syh_about) ====================
+  - group: syh_about
+    label: 关于我们
+    formSchema:
+      # Hero 区
+      - $formkit: group
+        name: hero
+        label: Hero 区（页面顶部区域）
+        expanded: true
+        children:
+          - $formkit: attachment
+            name: bg
+            label: 背景图片
+            help: 建议尺寸 1920x800 以上，图片将做暗色处理。
+            value: /themes/theme-dylan-mall/assets/images/company/mall-render.jpg
+          - $formkit: text
+            name: eyebrow
+            label: 英文小标题
+            help: 显示在顶部的小标题，如“About Us”。
+            value: About Us
+          - $formkit: text
+            name: title_white
+            label: 主标题白色部分
+            help: 页面主标题的白色部分，如“关于”。
+            value: 关于
+          - $formkit: text
+            name: title_gold
+            label: 主标题金色部分
+            help: 页面主标题的金色部分，如“上悦汇”。
+            value: 上悦汇
+
+      # 简介区
+      - $formkit: group
+        name: intro
+        label: 简介区
+        expanded: true
+        children:
+          - $formkit: attachment
+            name: img
+            label: 配图
+            help: 建议尺寸 800x600 以上，图片将显示在右侧，带有阴影效果。
+            value: /themes/theme-dylan-mall/assets/images/company/mall-render.jpg
+          - $formkit: text
+            name: badge
+            label: 图片角标文字
+            help: 显示在图片右下角的角标，如“MT MALL · 上悦汇”。
+            value: MT MALL · 上悦汇
+          - $formkit: text
+            name: eyebrow
+            label: 区块小标题
+            help: 简介区顶部的小标题，如“集团简介”。
+            value: 集团简介
+          - $formkit: text
+            name: section_title
+            label: 区块标题黑色部分
+            help: 简介区主标题的黑色部分，如“综合性民营”。
+            value: 综合性民营
+          - $formkit: text
+            name: section_title_gold
+            label: 区块标题金色部分
+            help: 简介区主标题的金色部分，如“企业集团”。
+            value: 企业集团
+          - $formkit: textarea
+            rows: 3
+            name: p1
+            label: 段落1
+            help: 第一段介绍文字，建议 80-150 字。
+            value: 广东上悦汇商业经营管理有限公司成立于2009年，是一家集房地产开发、农产品批发、商业运营、物业管理、娱乐传媒、电影院、电子游艺及儿童娱乐体验于一体的综合性民营企业集团。
+          - $formkit: textarea
+            rows: 3
+            name: p2
+            label: 段落2
+            help: 第二段介绍文字，建议 80-150 字。
+            value: 经过16年的深耕发展，现已成为广东省极具实力及规模的企业集团。旗下拥有上悦汇购物中心、上悦汇影城、嗨客玩家等多个知名品牌，在深圳、东莞、揭阳、惠州等地建立了强大的商业网络。
+          - $formkit: text
+            name: btn_text
+            label: 按钮文字
+            help: 简介区按钮文字，如“了解核心业务 →”。
+            value: 了解核心业务 →
+          - $formkit: text
+            name: btn_url
+            label: 按钮链接
+            help: 按钮跳转地址，一般指向核心业务页面。
+            value: /business
+
+      # 统计数据区（关于我们页独立）
+      - $formkit: group
+        name: stats
+        label: 统计数据区（关于我们页独立）
+        expanded: true
+        children:
+          - $formkit: text
+            name: num1
+            label: 数字1
+            help: 显示在统计卡片上的数字。
+            value: '16'
+          - $formkit: text
+            name: unit1
+            label: 单位1
+            value: 年
+          - $formkit: text
+            name: label1
+            label: 说明1
+            value: 行业深耕经验
+          - $formkit: text
+            name: num2
+            label: 数字2
+            value: '13'
+          - $formkit: text
+            name: unit2
+            label: 单位2
+            value: 万+㎡
+          - $formkit: text
+            name: label2
+            label: 说明2
+            value: 自有物业面积
+          - $formkit: text
+            name: num3
+            label: 数字3
+            value: '3000'
+          - $formkit: text
+            name: unit3
+            label: 单位3
+            value: +
+          - $formkit: text
+            name: label3
+            label: 说明3
+            value: 合作品牌商户
+          - $formkit: text
+            name: num4
+            label: 数字4
+            value: '99'
+          - $formkit: text
+            name: unit4
+            label: 单位4
+            value: '%'
+          - $formkit: text
+            name: label4
+            label: 说明4
+            value: 出租率
+
+      # 发展历程区
+      - $formkit: group
+        name: timeline
+        label: 发展历程区
+        expanded: true
+        children:
+          - $formkit: checkbox
+            name: show_timeline
+            label: 显示发展历程区
+            help: 关闭后整个发展历程区块将不显示。
+            value: true
+          - $formkit: text
+            name: section_title
+            label: 区块主标题
+            help: 发展历程区的主标题，建议 4-8 个字。
+            value: 发展历程
+          - $formkit: text
+            name: section_subtitle
+            label: 区块副标题（金色部分）
+            help: 主标题下方的金色副标题，建议 6-10 个字。
+            value: 从零起步，步步为营
+          - $formkit: repeater
+            name: items
+            label: 历程条目
+            help: 可添加、删除、排序历程条目。每个条目包含年份、标题、描述。
+            value:
+              - year: "2009"
+                title: 集团成立
+                desc: 广东上悦汇商业经营管理有限公司正式成立，开启商业运营之路。
+              - year: "2012"
+                title: 深圳项目启动
+                desc: 深圳兴万达广场开业，开启商业综合体运营新篇章，总面积5.8万㎡。
+              - year: "2018"
+                title: 东莞旗舰项目
+                desc: 东莞上悦汇购物中心及影城正式开业，确立区域商业标杆地位，总面积8万㎡。
+              - year: "2022"
+                title: 自营品牌拓展
+                desc: 嗨客玩家电玩中心正式开业，完善娱乐业态布局，打造电竞+电玩融合新体验。
+              - year: "2025"
+                title: 跨区域发展
+                desc: 揭阳上悦汇影城筹备启动，开启华南区域拓展战略，布局汕潮揭都市圈核心地带。
+            children:
+              - $formkit: text
+                name: year
+                label: 年份
+                help: 年份数字，如“2009”。
+                value: ""
+              - $formkit: text
+                name: title
+                label: 标题
+                help: 该年份的事件标题，建议 6-10 个字。
+                value: ""
+              - $formkit: textarea
+                rows: 2
+                name: desc
+                label: 描述
+                help: 该事件的详细描述，建议 30-80 字。
+                value: ""
+
+      # 团队KPI区
+      - $formkit: group
+        name: kpi
+        label: 团队KPI区
+        expanded: true
+        children:
+          - $formkit: text
+            name: eyebrow
+            label: 区块小标题
+            help: 团队优势区顶部的小标题，如“团队优势”。
+            value: 团队优势
+          - $formkit: text
+            name: title_before
+            label: 大标题白色部分
+            help: 大标题的白色部分，如“专业团队，”。
+            value: 专业团队，
+          - $formkit: text
+            name: title_gold
+            label: 大标题金色部分
+            help: 大标题的金色部分，如“行业精英”。
+            value: 行业精英
+          - $formkit: text
+            name: num1
+            label: 数值1
+            help: 显示在团队KPI卡片的数字。
+            value: 30%+
+          - $formkit: text
+            name: label1
+            label: 说明1
+            help: 数字下方的说明文字。
+            value: 本科以上学历高素质专业团队
+          - $formkit: text
+            name: num2
+            label: 数值2
+            value: 97%+
+          - $formkit: text
+            name: label2
+            label: 说明2
+            value: 招商满铺率持续高效运营
+          - $formkit: text
+            name: num3
+            label: 数值3
+            value: 200+
+          - $formkit: text
+            name: label3
+            label: 说明3
+            value: 年度策划活动丰富商业运营
+          - $formkit: text
+            name: num4
+            label: 数值4
+            value: 16年
+          - $formkit: text
+            name: label4
+            label: 说明4
+            value: 深耕行业经验专业沉淀积累
+          - $formkit: textarea
+            rows: 3
+            name: team_desc
+            label: 团队介绍描述文字
+            help: 团队优势的详细描述，建议 60-120 字。
+            value: 团队成员不少来自万达、保利、茂业、华润等国内知名品牌企业，拥有成功招商策划运营经典案例。团队秉承「学习、创新、超越」的理念，以高效运营能力打造商业生态闭环。
+
+      # 城市布局区（支持动态增删）
+      - $formkit: group
+        name: cities
+        label: 城市布局区
+        expanded: true
+        children:
+          # 区块通用配置
+          - $formkit: text
+            name: eyebrow
+            label: 区块小标题
+            help: 城市布局区顶部的小标题，如“粤港澳大湾区布局”。
+            value: 粤港澳大湾区布局
+          - $formkit: text
+            name: title_before
+            label: 大标题白色部分（前半）
+            help: 大标题的白色前半部分，如“四城联动”。
+            value: 四城联动
+          - $formkit: text
+            name: title_gold
+            label: 大标题金色部分
+            help: 大标题的金色部分，如“构筑湾区生态”。
+            value: 构筑湾区生态
+          - $formkit: text
+            name: title_after
+            label: 大标题白色部分（后半，可选）
+            help: 大标题的金色部分之后的白字，通常为空。
+            value: ''
+          # 地图背景配置
+          - $formkit: attachment
+            name: map_bg
+            label: 地图背景图片
+            help: 建议尺寸 600x600 以上，图片将做半透明处理。推荐使用透明底图。
+            value: /themes/theme-dylan-mall/assets/images/company/skyline.jpg
+          - $formkit: text
+            name: map_label
+            label: 地图标签文字
+            help: 显示在地图左上角的标签，如“大湾区战略布局 · GBA Strategy”。
+            value: 大湾区战略布局 · GBA Strategy
+
+          # 城市列表（可动态增删）
+          - $formkit: repeater
+            name: items
+            label: 城市列表
+            help: 可添加任意数量的城市，每个城市需填写名称、说明、项目、副标题以及地图上的坐标（百分比）。
+            value:
+              - name: 东莞市
+                gdp: GDP：11,200亿元 ｜ 人口：1,053万人
+                project: 上悦汇购物中心 · 4大农产品市场
+                subtitle: 旗舰核心
+                left: 59
+                top: 48
+              - name: 深圳市
+                gdp: GDP：32,387亿元 ｜ 人口：1,768万人
+                project: 兴万达广场
+                subtitle: 兴万达广场
+                left: 40
+                top: 58
+              - name: 揭阳市
+                gdp: 汕潮揭都市圈核心 ｜ 大湾区与海西区轴线中心
+                project: 上悦汇影城（筹备中）
+                subtitle: 影城筹备中
+                left: 29
+                top: 37
+              - name: 惠州市
+                gdp: 珠江三角洲中心城市 ｜ 国家历史文化名城
+                project: 石湾湖山农贸批发市场
+                subtitle: 农贸市场
+                left: 76
+                top: 66
+            children:
+              - $formkit: text
+                name: name
+                label: 城市名称
+                help: 城市名称，如“东莞市”。
+                value: ''
+              - $formkit: text
+                name: gdp
+                label: 城市说明
+                help: 城市的简要说明，如“GDP：11,200亿元 ｜ 人口：1,053万人”。
+                value: ''
+              - $formkit: text
+                name: project
+                label: 城市项目
+                help: 该城市的主要项目，如“上悦汇购物中心 · 4大农产品市场”。
+                value: ''
+              - $formkit: text
+                name: subtitle
+                label: 城市副标题（地图标注点下方文字）
+                help: 显示在地图标注点下方的文字，如“旗舰核心”。
+                value: ''
+              - $formkit: number
+                name: left
+                label: 地图标注点左位置（%）
+                help: 百分比值，例如 59 表示 left:59%。
+                value: 50
+              - $formkit: number
+                name: top
+                label: 地图标注点顶位置（%）
+                help: 百分比值，例如 48 表示 top:48%。
+                value: 50
+
+      # 展望未来区
+      - $formkit: group
+        name: vision
+        label: 展望未来区
+        expanded: true
+        children:
+          - $formkit: text
+            name: eyebrow
+            label: 区块小标题
+            help: 展望未来区顶部的小标题，如“展望未来”。
+            value: 展望未来
+          - $formkit: text
+            name: title_before
+            label: 大标题白色部分
+            help: 大标题的白色部分，如“开启华南<br>”。
+            value: 开启华南<br>
+          - $formkit: text
+            name: title_gold
+            label: 大标题金色部分
+            help: 大标题的金色部分，如“卓越城市运营”。
+            value: 卓越城市运营
+          - $formkit: textarea
+            rows: 3
+            name: quote
+            label: 企业愿景引言
+            help: 企业愿景的引言，建议 40-80 字。
+            value: 积极进取，稳健经营，开启华南区域高品质商业版图的全新盛景，造就华南区首屈一指的卓越城市运营商！
+          - $formkit: text
+            name: trends_eyebrow
+            label: 发展趋势小标题
+            help: 发展趋势区块的小标题，如“发展趋势”。
+            value: 发展趋势
+          - $formkit: text
+            name: trend1_no
+            label: 发展趋势1 - 编号
+            help: 第一个发展趋势的编号，如“趋势 01”。
+            value: 趋势 01
+          - $formkit: text
+            name: trend1_text
+            label: 发展趋势1 - 内容
+            help: 第一个发展趋势的内容，建议 10-20 个字。
+            value: 社区体验式商业，打造沉浸式消费场景
+          - $formkit: text
+            name: trend2_no
+            label: 发展趋势2 - 编号
+            value: 趋势 02
+          - $formkit: text
+            name: trend2_text
+            label: 发展趋势2 - 内容
+            value: 会员矩阵营销，构建精准私域流量
+          - $formkit: text
+            name: trend3_no
+            label: 发展趋势3 - 编号
+            value: 趋势 03
+          - $formkit: text
+            name: trend3_text
+            label: 发展趋势3 - 内容
+            value: 场景化购物娱乐，激活消费新体验
+          - $formkit: text
+            name: trend4_no
+            label: 发展趋势4 - 编号
+            value: 趋势 04
+          - $formkit: text
+            name: trend4_text
+            label: 发展趋势4 - 内容
+            value: 跨界融合体验，重塑商业边界
+          - $formkit: text
+            name: goals_eyebrow
+            label: 发展目标小标题
+            help: 发展目标区块的小标题，如“发展目标”。
+            value: 发展目标
+          - $formkit: text
+            name: goal1
+            label: 发展目标1
+            help: 第一个发展目标，建议 8-12 个字。
+            value: 拓展华南区域商业版图
+          - $formkit: text
+            name: goal2
+            label: 发展目标2
+            value: 打造一站式娱乐体验平台
+          - $formkit: text
+            name: goal3
+            label: 发展目标3
+            value: 强化农产品供应链网络
+          - $formkit: text
+            name: goal4
+            label: 发展目标4
+            value: 创新商业运营模式
+
+      # CTA 区
+      - $formkit: group
+        name: cta
+        label: CTA 区（行动号召区域）
+        expanded: true
+        children:
+          - $formkit: checkbox
+            name: show_cta
+            label: 显示 CTA 区
+            help: 关闭后整个 CTA 区块将不显示。
+            value: false
+          - $formkit: attachment
+            name: bg
+            label: 背景图
+            help: 建议尺寸 1920x800 以上，图片将做暗色处理。
+            value: /themes/theme-dylan-mall/assets/images/company/mall-night.jpg
+          - $formkit: text
+            name: eyebrow
+            label: 小标题
+            help: 显示在 CTA 区域顶部，建议 6-8 个字。
+            value: 精诚合作 · 携手共赢
+          - $formkit: text
+            name: title
+            label: 主标题白色部分
+            help: CTA 区域主标题的白色部分，如“期待与您携手，”。
+            value: 期待与您携手，
+          - $formkit: text
+            name: title_gold
+            label: 主标题金色部分
+            help: CTA 区域主标题的金色部分，如“共筑未来”。
+            value: 共筑未来
+          - $formkit: text
+            name: sub
+            label: 副标题
+            help: 主标题下方的说明文字，建议 15-25 个字。
+            value: 共同开创华南区商业运营新篇章
+          - $formkit: text
+            name: btn1_text
+            label: 按钮1文字
+            help: 左侧按钮文字，建议 6-10 个字。
+            value: 立即联系我们 →
+          - $formkit: text
+            name: btn1_url
+            label: 按钮1链接
+            help: 按钮跳转地址。
+            value: /contact
+          - $formkit: text
+            name: btn2_text
+            label: 按钮2文字
+            help: 右侧按钮文字，建议 6-10 个字。
+            value: 了解核心业务
+          - $formkit: text
+            name: btn2_url
+            label: 按钮2链接
+            help: 按钮跳转地址。
+            value: /business
+
+  # ==================== 联系我们页 (syh_contact) ====================
+  - group: syh_contact
+    label: 联系我们
+    formSchema:
+      # Hero 区
+      - $formkit: group
+        name: hero
+        label: Hero 区（页面顶部区域）
+        expanded: true
+        children:
+          - $formkit: attachment
+            name: bg
+            label: 背景图片
+            help: 建议尺寸 1920x800 以上，图片将做暗色处理。
+            value: /themes/theme-dylan-mall/assets/images/company/skyline.jpg
+          - $formkit: text
+            name: eyebrow
+            label: 英文小标题
+            help: 显示在顶部的小标题，如“Contact Us”。
+            value: Contact Us
+          - $formkit: text
+            name: title_white
+            label: 主标题白色部分
+            help: 页面主标题的白色部分，如“联系”。
+            value: 联系
+          - $formkit: text
+            name: title_gold
+            label: 主标题金色部分
+            help: 页面主标题的金色部分，如“我们”。
+            value: 我们
+
+      # 项目位置区（可动态增删）
+      - $formkit: group
+        name: locations
+        label: 项目位置区
+        expanded: true
+        children:
+          - $formkit: checkbox
+            name: show_locations
+            label: 显示项目位置区
+            help: 关闭后整个项目位置区块将不显示。
+            value: true
+          - $formkit: text
+            name: eyebrow
+            label: 区块小标题
+            help: 项目位置区顶部的小标题，如“项目位置”。
+            value: 项目位置
+          - $formkit: text
+            name: title_before
+            label: 大标题白色部分（前半）
+            help: 大标题的白色前半部分，如“我们在”。
+            value: 我们在
+          - $formkit: text
+            name: title_gold
+            label: 大标题金色部分
+            help: 大标题的金色部分，如“大湾区”。
+            value: 大湾区
+          - $formkit: text
+            name: title_after
+            label: 大标题白色部分（后半）
+            help: 大标题的白色后半部分，如“的布局”。
+            value: 的布局
+          - $formkit: repeater
+            name: items
+            label: 位置列表
+            help: 可添加任意数量的项目位置（建议8个）。每个位置包含图片、城市、项目名称、说明。
+            value:
+              - img: /themes/theme-dylan-mall/assets/images/company/mall-night.jpg
+                city: 东莞
+                name: 上悦汇购物中心 · 上悦汇影城
+                addr: 购物中心8万㎡ · 影城3000㎡ · 嗨客玩家电玩中心
+              - img: /themes/theme-dylan-mall/assets/images/company/mall2.jpg
+                city: 深圳
+                name: 兴万达广场
+                addr: 商业面积5.8万㎡
+              - img: /themes/theme-dylan-mall/assets/images/company/market.jpg
+                city: 东莞 / 惠州
+                name: 农产品批发市场（4处）
+                addr: 总面积12万㎡ · 辐射8省
+            children:
+              - $formkit: attachment
+                name: img
+                label: 图片
+                help: 建议尺寸 600x400 以上，图片将裁剪为 16:9 比例显示。
+                value: ''
+              - $formkit: text
+                name: city
+                label: 城市
+                help: 城市名称，建议 4-8 个字。
+                value: ''
+              - $formkit: text
+                name: name
+                label: 项目名称
+                help: 项目名称，建议 10-20 个字。
+                value: ''
+              - $formkit: text
+                name: addr
+                label: 项目说明
+                help: 项目简要说明，建议 20-40 个字。
+                value: ''
+
+      # 联系信息区
+      - $formkit: group
+        name: info
+        label: 联系信息区
+        expanded: true
+        children:
+          - $formkit: checkbox
+            name: show_info
+            label: 显示联系信息区
+            help: 关闭后整个联系信息区块将不显示。
+            value: true
+          - $formkit: text
+            name: section_eyebrow
+            label: 区块小标题
+            help: 联系信息区顶部的小标题，建议 4-6 个字。
+            value: 联系方式
+          - $formkit: text
+            name: section_title
+            label: 主标题
+            help: 联系信息区的主标题，建议 6-10 个字。
+            value: 期待与您精诚合作
+          - $formkit: textarea
+            rows: 2
+            name: intro_text
+            label: 介绍文字
+            help: 主标题下方的介绍文字，建议 30-50 字。
+            value: 无论是招商入驻、品牌合作还是其他商务需求，我们期待与您建立深度合作关系。
+          - $formkit: text
+            name: address
+            label: 集团总部地址
+            help: 集团总部的详细地址。
+            value: 广东省东莞市桥头镇桥光大道165号上悦汇购物中心
+          - $formkit: text
+            name: phone
+            label: 总机电话
+            help: 总机电话，格式如“0769-81023888”。
+            value: 0769-81023888
+          - $formkit: text
+            name: mobile
+            label: 招商热线
+            help: 招商热线，格式如“138-0000-0000”。
+            value: 138-0000-0000
+          - $formkit: text
+            name: email
+            label: 邮箱
+            help: 企业邮箱地址。
+            value: 360036370@qq.com
+          - $formkit: text
+            name: hours
+            label: 办公时间
+            help: 办公时间说明。
+            value: 周一至周五 10:00—22:00 · 周六 10:00—22:30
+
+      # 快速咨询通道区
+      - $formkit: group
+        name: quick_consult
+        label: 快速咨询通道区
+        expanded: true
+        children:
+          - $formkit: text
+            name: title
+            label: 标题
+            help: 快速咨询通道的标题，建议 6-10 个字。
+            value: 快速咨询通道
+          - $formkit: textarea
+            rows: 2
+            name: desc
+            label: 描述（支持HTML）
+            help: 标题下方的描述文字，可使用 <br> 换行。建议 30-50 字。
+            value: 扫码添加客服，或点击按钮提交需求<br>我们将在1个工作日内与您联系
+          - $formkit: text
+            name: button_text
+            label: 咨询按钮文字
+            help: 咨询按钮上的文字，建议 6-10 个字。
+            value: 提交合作需求 →
+          - $formkit: textarea
+            rows: 2
+            name: button_note
+            label: 咨询按钮下方提示文字
+            help: 按钮下方的提示小字。
+            value: 点击后将跳转至咨询页面，您可通过评论组件提交详细信息
+          - $formkit: text
+            name: button_url
+            label: 咨询按钮跳转链接
+            help: 点击按钮后跳转的页面，建议使用 Halo 评论组件页面收集信息。
+            value: /contact us
+          - $formkit: text
+            name: wechat_card_title
+            label: 微信客服卡片标题
+            help: 微信二维码卡片的标题，建议 4-8 个字。
+            value: 微信客服
+          - $formkit: textarea
+            rows: 2
+            name: wechat_card_desc
+            label: 微信客服卡片描述（支持HTML）
+            help: 微信卡片描述，可使用 <br> 换行。
+            value: 扫码添加商务顾问<br>即时在线沟通
+          - $formkit: text
+            name: official_card_title
+            label: 官方公众号卡片标题
+            help: 官方公众号卡片的标题，建议 4-8 个字。
+            value: 官方公众号
+          - $formkit: attachment
+            name: qr_wechat_img
+            label: 微信客服二维码图片
+            help: 建议尺寸 300x300，透明背景 PNG 更佳。
+            value: /themes/theme-dylan-mall/assets/images/contact/qr-wechat-placeholder.jpg
+          - $formkit: textarea
+            rows: 2
+            name: official_card_desc
+            label: 官方公众号卡片描述（支持HTML）
+            help: 公众号卡片描述，可使用 <br> 换行。
+            value: 关注获取最新资讯<br>留言合作意向
+          - $formkit: attachment
+            name: qr_official_img
+            label: 官方公众号二维码图片
+            help: 建议尺寸 300x300，透明背景 PNG 更佳。
+            value: /themes/theme-dylan-mall/assets/images/contact/qr-official-placeholder.jpg
+
+  # ==================== 全局设置 ====================
+  - group: global
+    label: 全局
+    formSchema:
+      # 基础全局设置
+      - $formkit: checkbox
+        name: show_scroll_button
+        label: 显示滚动到顶部按钮
+        help: 开启后，页面右下角会出现“返回顶部”按钮。
+        value: true
+
+      # ----- 页头设置 -----
+      - $formkit: group
+        name: header
+        label: 页头设置
+        expanded: true
+        children:
+          - $formkit: select
+            name: logo_type
+            label: Logo 类型
+            help: 选择“图片”则使用上传的图片作为 Logo；选择“文字”则显示文字 Logo。
+            value: image
+            options:
+              - label: 图片
+                value: image
+              - label: 文字
+                value: text
+          - $formkit: attachment
+            name: logo_image
+            label: Logo 图片（图片模式时生效）
+            help: 建议尺寸 高度不超过 40px，透明背景 PNG 最佳。
+            value: /themes/theme-dylan-mall/assets/images/logo/logo.png
+          - $formkit: text
+            name: logo_text
+            label: Logo 文字（文字模式时生效）
+            help: 文字 Logo 的内容，建议 4-8 个字。
+            value: ''
+          - $formkit: text
+            name: site_name
+            label: 站点名称（显示在 Logo 旁，可选）
+            help: 显示在 Logo 右侧的附加文字，如“集团”，留空则不显示。建议 2-6 个字。
+            value: 广东上悦汇 · 集团
+          - $formkit: menuRadio
+            name: nav_menu
+            label: 导航菜单
+            help: 在后台「外观→菜单」创建后选择，留空则自动使用主导航菜单。
+            value: ''
+          - $formkit: select
+            name: nav_alignment
+            label: 菜单对齐方式
+            help: 控制导航菜单在页头中的水平对齐方式。
+            value: left
+            options:
+              - label: 左对齐
+                value: left
+              - label: 居中
+                value: center
+              - label: 右对齐
+                value: right
+          - $formkit: checkbox
+            name: sticky_header
+            label: 固定页头（滚动时保持可见）
+            help: 开启后，页头会固定在页面顶部。
+            value: true
+
+      # ----- 页脚区域（按页面显示顺序分组）-----
+      - $formkit: group
+        name: footer
+        label: 页脚区域
+        expanded: true
+        children:
+          # 1. CTA 条
+          - $formkit: text
+            name: cta_text
+            label: CTA条主文字
+            help: 页脚顶部 CTA 条的主文字，建议 8-12 个字。
+            value: 携手上悦汇，共创商业新价值
+          - $formkit: text
+            name: cta_sub
+            label: CTA条副文字
+            help: CTA 条副文字，建议 10-20 个字。
+            value: 欢迎品牌商户洽谈入驻，共创区域商业繁荣
+          - $formkit: text
+            name: cta_btn_text
+            label: CTA条按钮文字
+            help: CTA 条按钮上的文字。
+            value: 立即联系招商团队 →
+          - $formkit: text
+            name: cta_btn_url
+            label: CTA条按钮链接
+            help: 按钮跳转地址。
+            value: /contact
+
+          # ----- 公司信息栏 -----
+          - $formkit: checkbox
+            name: show_brand
+            label: 显示公司信息栏
+            help: 关闭后页脚左侧的公司信息及联系方式将不显示。
+            value: true
+          - $formkit: text
+            name: brand_name
+            label: 公司主标题
+            help: 显示在页脚顶部的公司名称，留空则使用站点标题（site.title）。
+            value: 深圳市好万达商贸有限公司东莞分公司
+          - $formkit: text
+            name: subtitle
+            label: 副标题
+            help: 显示在主标题下方、品牌副标语上方的副标题，留空则不显示。
+            value: 广东上悦汇商业经营管理有限公司
+          - $formkit: text
+            name: company_name_1
+            label: 备案公司名称 1
+            help: 电脑端版权行第一个公司（保持与首页公司信息一致）
+            value: 深圳市好万达商贸有限公司东莞分公司
+          - $formkit: text
+            name: company_name_2
+            label: 备案公司名称 2
+            help: 电脑端版权行第二个公司（保持与首页公司信息一致）
+            value: 广东上悦汇商业经营管理有限公司
+          - $formkit: text
+            name: brand_sub
+            label: 品牌副标语
+            help: 显示在公司名称下方的副标语，建议 8-12 个字。
+            value: 粤港澳大湾区商业运营专家
+          - $formkit: textarea
+            rows: 3
+            name: desc
+            label: 公司简介
+            help: 公司简介文字，建议 60-120 字，为空时则隐藏不显示。
+            value: 广东上悦汇商业经营管理有限公司，自2009年成立，深耕商业运营16年，构建覆盖深圳、东莞、揭阳、惠州的战略商业版图。
+          - $formkit: text
+            name: phone
+            label: 总机电话
+            help: 显示在页脚的联系电话。
+            value: 0769-81023888
+          - $formkit: text
+            name: email
+            label: 邮箱
+            help: 企业邮箱地址。
+            value: ''
+          - $formkit: text
+            name: address
+            label: 地址
+            help: 公司地址。
+            value: 广东省东莞市桥头镇桥光大道165号上悦汇购物中心
+
+          # 3. 快速导航栏一
+          - $formkit: checkbox
+            name: show_nav1
+            label: 显示快速导航栏一
+            help: 关闭后第一个导航栏将不显示。
+            value: false
+          - $formkit: text
+            name: nav1_title
+            label: 快速导航栏一标题
+            help: 第一个导航栏的标题，建议 4-6 个字。
+            value: 快速导航
+          - $formkit: menuRadio
+            name: nav1_menu
+            label: 快速导航栏一菜单
+            help: 在后台「外观→菜单」创建后选择，留空则自动使用主导航菜单。
+            value: ''
+
+          # 4. 快速导航栏二
+          - $formkit: checkbox
+            name: show_nav2
+            label: 显示快速导航栏二
+            help: 关闭后第二个导航栏将不显示。
+            value: false
+          - $formkit: text
+            name: nav2_title
+            label: 快速导航栏二标题
+            help: 第二个导航栏的标题，建议 4-6 个字。
+            value: 核心业务
+          - $formkit: menuRadio
+            name: nav2_menu
+            label: 快速导航栏二菜单
+            help: 在后台「外观→菜单」创建后选择，留空则不显示链接。
+            value: ''
+
+          # ----- 二维码栏 -----
+          - $formkit: checkbox
+            name: show_qr
+            label: 显示二维码栏
+            help: 关闭后右侧二维码栏将不显示。
+            value: true
+          - $formkit: text
+            name: qr_title
+            label: 二维码栏标题
+            help: 二维码栏的标题，建议 4-6 个字。
+            value: 关注我们
+          - $formkit: attachment
+            name: qr_wechat
+            label: 二维码-1
+            help: 建议尺寸 120x120，透明背景更佳。
+            value: ''
+          - $formkit: text
+            name: qr_wechat_text
+            label: 二维码-1下方文字
+            help: 显示在二维码-1下方的文字。
+            value: 微信
+          - $formkit: attachment
+            name: qr_douyin
+            label: 抖音二维码
+            help: 建议尺寸 120x120，透明背景更佳。
+            value: ''
+          - $formkit: text
+            name: qr_douyin_text
+            label: 抖音二维码下方文字
+            help: 显示在抖音二维码下方的文字。
+            value: 抖音
+          - $formkit: attachment
+            name: qr_xiaohongshu
+            label: 小红书二维码
+            help: 建议尺寸 120x120，透明背景更佳。
+            value: ''
+          - $formkit: text
+            name: qr_xiaohongshu_text
+            label: 小红书二维码下方文字
+            help: 显示在小红书二维码下方的文字。
+            value: 小红书
+          - $formkit: attachment
+            name: qr_other
+            label: 其他二维码（如B站、企业微信等）
+            help: 建议尺寸 120x120，透明背景更佳。
+            value: ''
+          - $formkit: text
+            name: qr_other_text
+            label: 其他二维码下方文字
+            help: 显示在其他二维码下方的文字。
+            value: 其他
+          - $formkit: text
+            name: qr_note
+            label: 二维码栏提示文字
+            help: 二维码栏下方的提示文字。
+            value: 扫码关注，获取最新资讯
+
+  # ==================== 布局设置 ====================
+  - group: layout
+    label: 布局
+    formSchema:
+      - $formkit: select
+        name: post_list_layout
+        label: 文章列表布局
+        help: 控制文章归档页的显示布局（网格/单条）。注意：当前新闻动态页已独立定制，此设置可能无效。
+        value: grid_3
+        options:
+          - label: 网格（一行三列）
+            value: grid_3
+          - label: 网格（一行两列）
+            value: grid_2
+          - label: 单条
+            value: single
+      - $formkit: select
+        name: header_widget
+        id: header_widget
+        label: 首页顶部模块
+        help: 原主题首页顶部显示的模块（如最新文章、站点标题）。当前主页已独立定制，此设置可能无效。
+        value: site_title
+        options:
+          - label: 无
+            value: none
+          - label: 最新一篇文章
+            value: latest_post
+          - label: 文章网格（最新五篇文章）
+            value: latest_post_grid
+          - label: 站点标题
+            value: site_title
+      - $formkit: checkbox
+        name: content_header
+        label: 显示文章页面顶部背景
+        help: 是否在文章详情页显示顶部背景。当前文章页已独立定制，此设置可能无效。
+        value: true
+
+  # ==================== 样式设置 ====================
+  - group: style
+    label: 样式
+    formSchema:
+      - $formkit: select
+        name: color_scheme
+        label: 默认配色
+        help: 选择网站默认的配色方案（深色/浅色/跟随系统）。
+        value: system
+        options:
+          - label: 跟随系统
+            value: system
+          - label: 深色
+            value: dark
+          - label: 浅色
+            value: light
+      - $formkit: checkbox
+        name: enable_change_color_scheme
+        label: 允许访客切换配色
+        help: 开启后，页头会出现配色切换按钮，访客可手动切换深色/浅色模式。
+        value: true
+
+  # ==================== 文章设置 ====================
+  - group: post
+    label: 文章
+    formSchema:
+      - $formkit: select
+        name: content_style
+        label: 内容样式
+        help: 文章内容区域的样式（GitHub 风格或 Tailwind Typography）。
+        value: github
+        options:
+          - label: GitHub 风格
+            value: github
+          - label: Tailwind CSS Typography
+            value: tailwind
+      - $formkit: select
+        name: title_position
+        label: 标题位置
+        help: 文章标题显示的位置（正文中或封面中）。
+        value: content
+        options:
+          - value: content
+            label: 正文中
+          - value: cover
+            label: 封面中
+      - $formkit: text
+        name: cover_height
+        label: 封面图高度
+        help: 文章封面图的高度，支持 CSS 单位（如 24rem）。
+        value: 24rem
+      - $formkit: checkbox
+        name: show_upvote_button
+        label: 显示点赞按钮
+        help: 是否在文章页显示点赞按钮。注意：当前文章页已独立定制，此设置可能无效。
+        value: true
+      - $formkit: checkbox
+        name: show_share_button
+        id: show_share_button
+        label: 显示分享按钮
+        help: 是否在文章页显示分享按钮。注意：当前文章页已独立定制，此设置可能无效。
+        value: true
+
+  # ==================== 备案设置 ====================
+  - group: beian
+    label: 备案设置
+    formSchema:
+      - $formkit: text
+        name: icp_text
+        label: ICP备案号
+        help: 网站 ICP 备案号，如“粤ICP备12345678号”。
+      - $formkit: text
+        name: icp_link
+        label: ICP备案跳转链接
+        help: ICP 备案号对应的链接，一般指向工信部备案查询页面。
+        value: https://beian.miit.gov.cn/
+      - $formkit: text
+        name: gongan_text
+        label: 公安联网备案号
+        help: 公安联网备案号（如有）。
+      - $formkit: text
+        name: gongan_link
+        label: 公安联网备案跳转链接
+        help: 公安联网备案查询链接。示例：https://beian.mps.gov.cn/#/query/webSearch?code=11010102000001
+        value: https://beian.mps.gov.cn/#/query/webSearch

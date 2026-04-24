@@ -1,0 +1,85 @@
+# Halo AnnotationSetting — 上悦汇企业主题
+# 需求二：为自定义页面（SinglePage）增加独立的 Hero 图片/文字元数据字段
+# 需求三：为页面按钮增加独立的链接/文字配置字段
+# 访问方式（模板中）：${singlePage.metadata.annotations['字段名']}
+
+---
+apiVersion: theme.halo.run/v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: theme-earth-syh-page
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: SinglePage
+  formSchema:
+    # ── 页面 Hero（覆盖主题全局设置） ──
+    - $formkit: attachment
+      name: page_hero_bg
+      label: "Hero 背景图片（此页专用，优先于主题全局设置）"
+    - $formkit: text
+      name: page_hero_eyebrow
+      label: "Hero 英文小标题（如 About Us）"
+    - $formkit: text
+      name: page_hero_title
+      label: "Hero 主标题（白色部分）"
+    - $formkit: text
+      name: page_hero_title_em
+      label: "Hero 主标题（金色部分）"
+    - $formkit: textarea
+      rows: 2
+      name: page_hero_desc
+      label: "Hero 描述文字（仅首页/全屏 Hero 使用）"
+
+    # ── 需求三：按钮链接独立配置 ──
+    - $formkit: text
+      name: page_btn1_text
+      label: "主按钮文字（如：立即联系我们 →）"
+    - $formkit: text
+      name: page_btn1_url
+      label: "主按钮链接（如：/contact 或完整 URL）"
+      help: "留空则使用主题默认按钮"
+    - $formkit: text
+      name: page_btn2_text
+      label: "次按钮文字（如：了解集团详情）"
+    - $formkit: text
+      name: page_btn2_url
+      label: "次按钮链接"
+      help: "留空则使用主题默认按钮"
+
+    # ── SEO 扩展 ──
+    - $formkit: text
+      name: page_seo_title
+      label: "SEO 标题（覆盖默认标题）"
+    - $formkit: textarea
+      rows: 2
+      name: page_seo_desc
+      label: "SEO 描述"
+
+---
+# 需求二：文章（Post）元数据扩展
+apiVersion: theme.halo.run/v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: theme-earth-syh-post
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Post
+  formSchema:
+    # ── 文章封面覆盖 ──
+    - $formkit: attachment
+      name: post_hero_bg
+      label: "文章 Hero 背景图（覆盖文章封面图）"
+    - $formkit: text
+      name: post_eyebrow
+      label: "文章 Hero 分类标签（如：新闻动态）"
+
+    # ── 需求三：文章内按钮 ──
+    - $formkit: text
+      name: post_back_text
+      label: "返回按钮文字（默认：返回新闻动态）"
+    - $formkit: text
+      name: post_back_url
+      label: "返回按钮链接（默认读取主题 news_page_slug 设置）"
+      help: "如 /news-list，留空则使用主题全局设置"

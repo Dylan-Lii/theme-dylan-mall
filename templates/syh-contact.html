@@ -1,0 +1,251 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  th:replace="~{modules/layout :: html(
+    title        = '联系我们 - ' + ${site.title},
+    hero         = ~{::hero},
+    content      = ~{::emptycont},
+    head         = ~{::head},
+    footer       = null,
+    sidebar      = ~{::emptybar},
+    contentClass = 'hidden'
+  )}"
+>
+  <th:block th:fragment="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/assets/styles/company.css}"/>
+  </th:block>
+
+  <th:block th:fragment="hero">
+    <th:block th:with="c=${theme.config.syh_contact}, s=${theme.config.syh}">
+      <div style="background:#FAF8F5">
+
+        <!-- PAGE HERO -->
+        <div class="syh-page-hero">
+          <div class="syh-page-hero-bg" th:style="|background-image:url('${not #strings.isEmpty(c.hero.bg) ? c.hero.bg : '/themes/theme-dylan-mall/assets/images/company/skyline.jpg'}')|"></div>
+          <div class="syh-page-hero-overlay"></div>
+          <div class="syh-page-hero-content">
+            <div class="syh-page-hero-eyebrow" th:text="${not #strings.isEmpty(c.hero.eyebrow) ? c.hero.eyebrow : 'Contact Us'}"></div>
+            <h1>
+              <th:block th:text="${not #strings.isEmpty(c.hero.title_white) ? c.hero.title_white : '联系'}"/>
+              <em th:text="${not #strings.isEmpty(c.hero.title_gold) ? c.hero.title_gold : '我们'}"></em>
+            </h1>
+          </div>
+        </div>
+
+        <!-- 项目位置区（可动态增删） -->
+        <section th:if="${c.locations.show_locations != false and not #lists.isEmpty(c.locations.items)}" class="syh-section syh-section-warm">
+          <div class="syh-inner">
+            <div class="syh-eyebrow" th:text="${not #strings.isEmpty(c.locations.eyebrow) ? c.locations.eyebrow : '项目位置'}"></div>
+            <h2 class="syh-title">
+              <th:block th:text="${not #strings.isEmpty(c.locations.title_before) ? c.locations.title_before : '我们在'}"/>
+              <span class="g" th:text="${not #strings.isEmpty(c.locations.title_gold) ? c.locations.title_gold : '大湾区'}"></span>
+              <th:block th:text="${not #strings.isEmpty(c.locations.title_after) ? c.locations.title_after : '的布局'}"/>
+            </h2>
+            <div class="syh-rule"></div>
+            <div class="syh-locations-grid">
+              <div class="syh-loc-card" th:each="loc : ${c.locations.items}">
+                <img class="syh-loc-img" th:src="${loc.img}" th:alt="${loc.city}">
+                <div class="syh-loc-body">
+                  <div class="syh-loc-city" th:text="${loc.city}"></div>
+                  <div class="syh-loc-name" th:text="${loc.name}"></div>
+                  <p class="syh-loc-addr" th:text="${loc.addr}"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- 联系信息 + 右侧可配置区域 -->
+        <section class="syh-section syh-section-white">
+          <div class="syh-inner">
+            <div class="syh-contact-grid">
+              <!-- 左：联系信息（独立配置） -->
+              <div th:if="${c.info.show_info != false}">
+                <div class="syh-eyebrow" th:text="${not #strings.isEmpty(c.info.section_eyebrow) ? c.info.section_eyebrow : '联系方式'}"></div>
+                <h2 class="syh-title" th:text="${not #strings.isEmpty(c.info.section_title) ? c.info.section_title : '期待与您精诚合作'}"></h2>
+                <div class="syh-rule"></div>
+                <p class="syh-lead" th:text="${not #strings.isEmpty(c.info.intro_text) ? c.info.intro_text : '无论是招商入驻、品牌合作还是其他商务需求，我们期待与您建立深度合作关系。'}"></p>
+                <div class="syh-info-cards" style="margin-top:32px">
+                  <div class="syh-info-card">
+                    <div class="syh-info-icon">📍</div>
+                    <div>
+                      <div class="syh-info-label">集团总部</div>
+                      <div class="syh-info-value" th:text="${not #strings.isEmpty(c.info.address) ? c.info.address : '广东省东莞市（请在主题设置→联系我们中填写）'}"></div>
+                    </div>
+                  </div>
+                  <div class="syh-info-card">
+                    <div class="syh-info-icon">📞</div>
+                    <div>
+                      <div class="syh-info-label">联系电话</div>
+                      <div class="syh-info-value">
+                        <a th:href="'tel:' + ${not #strings.isEmpty(c.info.phone) ? c.info.phone : '0769-0000-0000'}"
+                           th:text="${(not #strings.isEmpty(c.info.phone) ? c.info.phone : '0769-0000-0000') + '（总机）'}"></a><br>
+                        <a th:href="'tel:' + ${not #strings.isEmpty(c.info.mobile) ? c.info.mobile : '138-0000-0000'}"
+                           th:text="${(not #strings.isEmpty(c.info.mobile) ? c.info.mobile : '138-0000-0000') + '（招商热线）'}"></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="syh-info-card">
+                    <div class="syh-info-icon">✉️</div>
+                    <div>
+                      <div class="syh-info-label">电子邮件</div>
+                      <div class="syh-info-value">
+                        <a th:href="'mailto:' + ${not #strings.isEmpty(c.info.email) ? c.info.email : 'contact@shangyuehui.com'}"
+                           th:text="${not #strings.isEmpty(c.info.email) ? c.info.email : 'contact@shangyuehui.com'}"></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="syh-info-card">
+                    <div class="syh-info-icon">🕐</div>
+                    <div>
+                      <div class="syh-info-label">办公时间</div>
+                      <div class="syh-info-value" th:text="${not #strings.isEmpty(c.info.hours) ? c.info.hours : '周一至周五 10:00—22:00'}"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 右：二维码 + 跳转按钮（完全可配置） -->
+              <div class="syh-contact-right">
+                <div class="syh-form-title" th:text="${not #strings.isEmpty(c.quick_consult.title) ? c.quick_consult.title : '快速咨询通道'}"></div>
+                <p class="syh-form-sub" th:utext="${not #strings.isEmpty(c.quick_consult.desc) ? c.quick_consult.desc : '扫码添加客服，或点击按钮提交需求<br>我们将在1个工作日内与您联系'}"></p>
+
+                <!-- 按钮区域移至二维码上方 -->
+                <div class="syh-contact-btn-wrap">
+                  <a th:href="${not #strings.isEmpty(c.quick_consult.button_url) ? c.quick_consult.button_url : '/contact/consult'}"
+                     class="syh-form-submit"
+                     style="display:inline-block; text-decoration:none; text-align:center;"
+                     th:text="${not #strings.isEmpty(c.quick_consult.button_text) ? c.quick_consult.button_text : '提交合作需求 →'}">
+                  </a>
+                  <p class="syh-form-note" th:text="${not #strings.isEmpty(c.quick_consult.button_note) ? c.quick_consult.button_note : '点击后将跳转至咨询页面，您可通过评论组件提交详细信息'}"></p>
+                </div>
+
+                <!-- 二维码网格（两列布局，手机端保持两列） -->
+                <div class="syh-qrcodes-grid">
+                  <!-- 微信客服卡片 -->
+                  <div class="syh-qrcard">
+                    <div class="syh-qrcard-inner">
+                      <img class="syh-qrcode-img"
+                           th:src="${not #strings.isEmpty(c.quick_consult.qr_wechat_img) ? c.quick_consult.qr_wechat_img : '/themes/theme-dylan-mall/assets/images/contact/qr-wechat-placeholder.jpg'}"
+                           alt="微信客服二维码"
+                           onerror="this.onerror=null;this.src='/themes/theme-dylan-mall/assets/images/company/placeholder.jpg'">
+                      <div class="syh-qrcard-title" th:text="${not #strings.isEmpty(c.quick_consult.wechat_card_title) ? c.quick_consult.wechat_card_title : '微信客服'}"></div>
+                      <p class="syh-qrcard-desc" th:utext="${not #strings.isEmpty(c.quick_consult.wechat_card_desc) ? c.quick_consult.wechat_card_desc : '扫码添加商务顾问<br>即时在线沟通'}"></p>
+                    </div>
+                  </div>
+                  <!-- 官方公众号卡片 -->
+                  <div class="syh-qrcard">
+                    <div class="syh-qrcard-inner">
+                      <img class="syh-qrcode-img"
+                           th:src="${not #strings.isEmpty(c.quick_consult.qr_official_img) ? c.quick_consult.qr_official_img : '/themes/theme-dylan-mall/assets/images/contact/qr-official-placeholder.jpg'}"
+                           alt="官方公众号二维码"
+                           onerror="this.onerror=null;this.src='/themes/theme-dylan-mall/assets/images/company/placeholder.jpg'">
+                      <div class="syh-qrcard-title" th:text="${not #strings.isEmpty(c.quick_consult.official_card_title) ? c.quick_consult.official_card_title : '官方公众号'}"></div>
+                      <p class="syh-qrcard-desc" th:utext="${not #strings.isEmpty(c.quick_consult.official_card_desc) ? c.quick_consult.official_card_desc : '关注获取最新资讯<br>留言合作意向'}"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div th:replace="~{modules/syh-footer :: footer}"></div>
+
+        <!-- 右侧区域专用样式（居中美化，手机端强制两列） -->
+        <style>
+          .syh-contact-right {
+            text-align: center;
+          }
+          /* 二维码网格：使用 Grid 布局，电脑端两列，手机端也强制两列并排 */
+          .syh-qrcodes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 1.5rem 0;
+          }
+          .syh-qrcard {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            padding: 1.5rem 1rem 1.8rem;
+          }
+          .syh-qrcard:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 32px rgba(0,0,0,0.08);
+          }
+          .syh-qrcard-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          .syh-qrcode-img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            background: #f3f3f3;
+            border: 1px solid #eee;
+          }
+          .syh-qrcard-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e2a3a;
+            margin: 0.5rem 0 0.25rem;
+          }
+          .syh-qrcard-desc {
+            font-size: 0.85rem;
+            color: #5a6874;
+            line-height: 1.4;
+            margin: 0;
+          }
+          .syh-contact-btn-wrap {
+            margin: 1rem 0 1rem;
+          }
+          .syh-contact-btn-wrap .syh-form-submit {
+            background: #c7a03a;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-block;
+          }
+          .syh-contact-btn-wrap .syh-form-submit:hover {
+            background: #a07e2c;
+          }
+          /* 手机端适配：卡片内二维码适当缩小，保持两列并排 */
+          @media (max-width: 768px) {
+            .syh-qrcodes-grid {
+              gap: 1rem;
+            }
+            .syh-qrcard {
+              padding: 1rem 0.5rem;
+            }
+            .syh-qrcode-img {
+              width: 100%;
+              max-width: 140px;
+              height: auto;
+              aspect-ratio: 1 / 1;
+            }
+            .syh-qrcard-title {
+              font-size: 1rem;
+            }
+            .syh-qrcard-desc {
+              font-size: 0.75rem;
+            }
+          }
+        </style>
+      </div>
+    </th:block>
+  </th:block>
+
+  <div th:fragment="emptycont"></div>
+  <th:block th:fragment="emptybar"></th:block>
+</html>

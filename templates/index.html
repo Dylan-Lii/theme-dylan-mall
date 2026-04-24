@@ -1,0 +1,210 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(
+    title        = ${site.title},
+    hero         = ~{::hero},
+    content      = ~{::emptycont},
+    head         = ~{::head},
+    footer       = null,
+    sidebar      = ~{::emptybar},
+    contentClass = 'hidden'
+  )}"
+>
+  <th:block th:fragment="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/assets/styles/company.css}"/>
+  </th:block>
+
+  <th:block th:fragment="hero">
+  <th:block th:with="h=${theme.config.syh}, g=${theme.config.global}">
+  <div style="background:#FAF8F5">
+
+    <!-- ══ HERO ══ -->
+    <section class="syh-hero">
+      <div class="syh-hero-bg"
+           th:style="|background-image:url('${not #strings.isEmpty(h.hero.bg_image) ? h.hero.bg_image : '/themes/theme-dylan-mall/assets/images/company/mall-night.jpg'}')|"></div>
+      <div class="syh-hero-overlay"></div>
+      <div class="syh-hero-content">
+        <div class="syh-hero-eyebrow" th:text="${not #strings.isEmpty(h.hero.eyebrow) ? h.hero.eyebrow : '粤港澳大湾区商业运营专家'}"></div>
+        <h1>
+          <th:block th:text="${not #strings.isEmpty(h.hero.title) ? h.hero.title : '深耕十四年'}"/>
+          <em th:text="${not #strings.isEmpty(h.hero.title2) ? h.hero.title2 : '铸就湾区商业新格局'}"></em>
+        </h1>
+        <p class="syh-hero-sub" th:text="${not #strings.isEmpty(h.hero.desc) ? h.hero.desc : '集房地产开发、农产品批发、商业运营、娱乐传媒于一体的综合性民营企业集团。'}"></p>
+        <div class="syh-hero-actions">
+          <a th:href="${not #strings.isEmpty(h.hero.btn1_url) ? h.hero.btn1_url : '/about'}"
+             th:text="${not #strings.isEmpty(h.hero.btn1_text) ? h.hero.btn1_text : '了解集团 →'}"
+             class="syh-btn syh-btn-gold"></a>
+          <a th:href="${not #strings.isEmpty(h.hero.btn2_url) ? h.hero.btn2_url : '/contact'}"
+             th:text="${not #strings.isEmpty(h.hero.btn2_text) ? h.hero.btn2_text : '商务合作'}"
+             class="syh-btn syh-btn-ghost"></a>
+        </div>
+      </div>
+      <div class="syh-hero-scroll"><div class="syh-scroll-line"></div><span>向下滚动</span></div>
+    </section>
+
+    <!-- ══ 统计数字区（主页独立） ══ -->
+    <div class="syh-stats-band">
+      <div class="syh-stats-row">
+        <div class="syh-stat-cell">
+          <div class="syh-stat-num"><th:block th:text="${not #strings.isEmpty(h.stats.num1) ? h.stats.num1 : '16'}"/><span class="syh-stat-unit" th:text="${not #strings.isEmpty(h.stats.unit1) ? h.stats.unit1 : '年'}"></span></div>
+          <div class="syh-stat-label" th:text="${not #strings.isEmpty(h.stats.label1) ? h.stats.label1 : '行业深耕经验'}"></div>
+        </div>
+        <div class="syh-stat-cell">
+          <div class="syh-stat-num"><th:block th:text="${not #strings.isEmpty(h.stats.num2) ? h.stats.num2 : '13'}"/><span class="syh-stat-unit" th:text="${not #strings.isEmpty(h.stats.unit2) ? h.stats.unit2 : '万+㎡'}"></span></div>
+          <div class="syh-stat-label" th:text="${not #strings.isEmpty(h.stats.label2) ? h.stats.label2 : '自有物业面积'}"></div>
+        </div>
+        <div class="syh-stat-cell">
+          <div class="syh-stat-num"><th:block th:text="${not #strings.isEmpty(h.stats.num3) ? h.stats.num3 : '3000'}"/><span class="syh-stat-unit" th:text="${not #strings.isEmpty(h.stats.unit3) ? h.stats.unit3 : '+'}"></span></div>
+          <div class="syh-stat-label" th:text="${not #strings.isEmpty(h.stats.label3) ? h.stats.label3 : '合作品牌商户'}"></div>
+        </div>
+        <div class="syh-stat-cell">
+          <div class="syh-stat-num"><th:block th:text="${not #strings.isEmpty(h.stats.num4) ? h.stats.num4 : '99'}"/><span class="syh-stat-unit" th:text="${not #strings.isEmpty(h.stats.unit4) ? h.stats.unit4 : '%'}"></span></div>
+          <div class="syh-stat-label" th:text="${not #strings.isEmpty(h.stats.label4) ? h.stats.label4 : '出租率'}"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 核心业务展示区（独立配置的8个磁贴）══ -->
+    <section class="syh-section syh-section-white">
+      <div class="syh-inner">
+        <div class="syh-biz-header">
+          <div>
+            <div class="syh-eyebrow" th:text="${not #strings.isEmpty(h.biz.section_eyebrow) ? h.biz.section_eyebrow : '核心业务板块'}"></div>
+            <h2 class="syh-title" th:text="${not #strings.isEmpty(h.biz.section_title) ? h.biz.section_title : '四大引擎，协同共生'}"></h2>
+          </div>
+          <a th:href="${not #strings.isEmpty(h.biz.btn_url) ? h.biz.btn_url : '/business'}"
+             th:text="${not #strings.isEmpty(h.biz.btn_text) ? h.biz.btn_text : '查看全部业务 →'}"
+             class="syh-btn syh-btn-outline"></a>
+        </div>
+        <div class="syh-biz-grid">
+          <!-- 循环生成磁贴 -->
+          <a class="syh-biz-tile" th:each="tile : ${h.home_tiles.tiles}" th:href="${tile.link}" style="text-decoration:none">
+            <img th:src="${tile.img}" th:alt="${tile.title}">
+            <div class="syh-biz-tile-overlay"></div>
+            <div class="syh-biz-tile-arrow">→</div>
+            <div class="syh-biz-tile-content">
+              <div class="syh-biz-tile-num" th:text="${tile.num}"></div>
+              <div class="syh-biz-tile-name" th:text="${tile.title}"></div>
+              <div class="syh-biz-tile-desc" th:text="${tile.desc}"></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 优势说明区（动态循环）══ -->
+    <section class="syh-section syh-section-warm">
+      <div class="syh-inner">
+        <div style="text-align:center">
+          <!-- 小标题已配置化 -->
+          <div class="syh-eyebrow" style="justify-content:center" th:text="${not #strings.isEmpty(h.why.eyebrow) ? h.why.eyebrow : '为什么选择我们'}"></div>
+          <h2 class="syh-title" th:text="${not #strings.isEmpty(h.why.title) ? h.why.title : '16年积累，实力见证'}"></h2>
+        </div>
+        <div class="syh-why-grid">
+          <div class="syh-why-card" th:each="item : ${h.why.items}" th:if="${h.why.items}">
+            <div class="syh-why-icon" th:text="${item.icon}"></div>
+            <div class="syh-why-title" th:text="${item.title}"></div>
+            <p class="syh-why-desc" th:text="${item.desc}"></p>
+          </div>
+          <!-- 如果 why.items 为空，显示默认占位（避免页面空白） -->
+          <div th:if="${#lists.isEmpty(h.why.items)}" class="syh-why-card">
+            <div class="syh-why-icon">🏆</div>
+            <div class="syh-why-title">深厚行业积淀</div>
+            <p class="syh-why-desc">自2009年成立，16年专注商业运营。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 合作品牌区（单行滚动）══ -->
+    <div class="syh-brand-band">
+      <div class="syh-brand-band-header">
+        <div class="syh-brand-band-eyebrow" th:text="${not #strings.isEmpty(h.brands.count) ? h.brands.count : '3000+'} + ' ' + ${not #strings.isEmpty(h.brands.subtitle_text) ? h.brands.subtitle_text : '合作品牌商户'}"></div>
+        <h2 class="syh-brand-band-title">
+          <strong th:text="${not #strings.isEmpty(h.brands.count) ? h.brands.count : '3000+'}"></strong>
+          <th:block th:text="${not #strings.isEmpty(h.brands.title) ? h.brands.title : '优质合作品牌商户共同见证'}"></th:block>
+        </h2>
+      </div>
+      <!-- 单行滚动容器（带边框和渐变遮罩） -->
+      <div class="syh-marquee-wrap">
+        <div class="syh-marquee-track">
+          <!-- 动态品牌列表 -->
+          <th:block th:if="${not #lists.isEmpty(h.brands.items)}" th:each="brand : ${h.brands.items}">
+            <div class="syh-brand-chip"><span class="syh-brand-name" th:text="${brand.name}"></span></div>
+          </th:block>
+          <!-- 复制一遍以实现无缝滚动 -->
+          <th:block th:if="${not #lists.isEmpty(h.brands.items)}" th:each="brand : ${h.brands.items}">
+            <div class="syh-brand-chip"><span class="syh-brand-name" th:text="${brand.name}"></span></div>
+          </th:block>
+          <!-- 如果品牌列表为空，显示默认品牌 -->
+          <th:block th:unless="${not #lists.isEmpty(h.brands.items)}">
+            <div class="syh-brand-chip"><span class="syh-brand-name">永辉超市</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">星巴克 Starbucks</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">肯德基 KFC</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">周大福</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">六福珠宝</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">老凤祥</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">屈臣氏</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">比亚迪</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">YH BRAVO</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">永旺莫莉幻想</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">任宿鹅城</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">苹果魅友</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">麦当劳</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">必胜客</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">国美电器</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">华润万家</span></div>
+            <!-- 复制一遍以实现无缝滚动 -->
+            <div class="syh-brand-chip"><span class="syh-brand-name">永辉超市</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">星巴克 Starbucks</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">肯德基 KFC</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">周大福</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">六福珠宝</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">老凤祥</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">屈臣氏</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">比亚迪</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">YH BRAVO</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">永旺莫莉幻想</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">任宿鹅城</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">苹果魅友</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">麦当劳</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">必胜客</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">国美电器</span></div>
+            <div class="syh-brand-chip"><span class="syh-brand-name">华润万家</span></div>
+          </th:block>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ CTA 合作区（增加显示开关）══ -->
+    <section th:if="${h.cta.show_cta != false}" class="syh-cta-band">
+      <div class="syh-cta-band-bg"
+           th:style="|background-image:url('${not #strings.isEmpty(h.cta.bg) ? h.cta.bg : '/themes/theme-dylan-mall/assets/images/company/mall-render.jpg'}')|"></div>
+      <div class="syh-cta-band-content">
+        <div class="syh-cta-eyebrow" th:text="${not #strings.isEmpty(h.cta.eyebrow) ? h.cta.eyebrow : '精诚合作 · 携手共赢'}"></div>
+        <h2 class="syh-cta-title" th:text="${not #strings.isEmpty(h.cta.title) ? h.cta.title : '期待与您携手，共筑未来'}"></h2>
+        <p class="syh-cta-sub" th:text="${not #strings.isEmpty(h.cta.sub) ? h.cta.sub : '共同开创华南区商业运营新篇章'}"></p>
+        <div class="syh-cta-btns">
+          <a th:href="${not #strings.isEmpty(h.cta.btn1_url) ? h.cta.btn1_url : '/contact'}"
+             th:text="${not #strings.isEmpty(h.cta.btn1_text) ? h.cta.btn1_text : '立即联系我们 →'}"
+             class="syh-btn syh-btn-gold"></a>
+          <a th:href="${not #strings.isEmpty(h.cta.btn2_url) ? h.cta.btn2_url : '/about'}"
+             th:text="${not #strings.isEmpty(h.cta.btn2_text) ? h.cta.btn2_text : '了解集团详情'}"
+             class="syh-btn syh-btn-ghost"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 全局页脚 ══ -->
+    <div th:replace="~{modules/syh-footer :: footer}"></div>
+
+  </div>
+  </th:block>
+  </th:block>
+
+  <div th:fragment="emptycont"></div>
+  <th:block th:fragment="emptybar"></th:block>
+</html>

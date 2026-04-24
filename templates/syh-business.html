@@ -1,0 +1,114 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(
+    title        = '核心业务 - ' + ${site.title},
+    hero         = ~{::hero},
+    content      = ~{::emptycont},
+    head         = ~{::head},
+    footer       = null,
+    sidebar      = ~{::emptybar},
+    contentClass = 'hidden'
+  )}"
+>
+  <th:block th:fragment="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/assets/styles/company.css}"/>
+  </th:block>
+
+  <th:block th:fragment="hero">
+  <th:block th:with="b=${theme.config.syh_business}">
+  <div style="background:#FAF8F5">
+
+    <!-- PAGE HERO -->
+    <div class="syh-page-hero">
+      <div class="syh-page-hero-bg"
+           th:style="|background-image:url('${not #strings.isEmpty(b.hero.bg) ? b.hero.bg : '/themes/theme-dylan-mall/assets/images/company/mall-night.jpg'}')|"></div>
+      <div class="syh-page-hero-overlay"></div>
+      <div class="syh-page-hero-content">
+        <div class="syh-page-hero-eyebrow" th:text="${not #strings.isEmpty(b.hero.eyebrow) ? b.hero.eyebrow : 'Core Business'}"></div>
+        <h1>
+          <th:block th:text="${not #strings.isEmpty(b.hero.title_white) ? b.hero.title_white : '核心'}"/>
+          <em th:text="${not #strings.isEmpty(b.hero.title_gold) ? b.hero.title_gold : '业务板块'}"></em>
+        </h1>
+      </div>
+    </div>
+
+    <!-- 动态循环生成业务板块 -->
+    <th:block th:each="item,iterStat : ${b.items.list}">
+      <section class="syh-section" th:classappend="${iterStat.index % 2 == 0} ? 'syh-section-white' : 'syh-section-warm'" th:id="|biz${iterStat.index+1}|">
+        <div class="syh-inner">
+          <div class="syh-biz-block" th:classappend="${iterStat.index % 2 != 0} ? 'syh-rev' : ''">
+            <div class="syh-biz-media">
+              <div class="syh-biz-media-num" th:style="${iterStat.index % 2 == 0} ? '' : 'left:auto;right:-20px'" th:text="${iterStat.index+1 < 10 ? '0' + (iterStat.index+1) : iterStat.index+1}"></div>
+              <img th:src="${not #strings.isEmpty(item.img) ? item.img : '/themes/theme-dylan-mall/assets/images/company/mall-night.jpg'}" th:alt="${item.title}">
+              <div class="syh-biz-label" th:text="${not #strings.isEmpty(item.label) ? item.label : 'Business'}"></div>
+            </div>
+            <div>
+              <div class="syh-eyebrow" th:text="${not #strings.isEmpty(item.eyebrow) ? item.eyebrow : '核心业务 · ' + (iterStat.index+1)}"></div>
+              <h2 class="syh-title">
+                <th:block th:text="${not #strings.isEmpty(item.title) ? item.title : '业务板块'}"/>
+                <br><span class="g" th:text="${not #strings.isEmpty(item.title_gold) ? item.title_gold : '运营管理'}"></span>
+              </h2>
+              <div class="syh-rule"></div>
+              <p style="font-size:17px;color:var(--syh-ink-soft);line-height:2;margin-bottom:16px"
+                 th:text="${not #strings.isEmpty(item.desc1) ? item.desc1 : '请输入描述内容...'}"></p>
+              <p style="font-size:17px;color:var(--syh-ink-soft);line-height:2;margin-bottom:24px"
+                 th:text="${not #strings.isEmpty(item.desc2) ? item.desc2 : ''}"></p>
+              <div class="syh-biz-metrics">
+                <div class="syh-metric-cell" th:if="${not #strings.isEmpty(item.m1_num)}">
+                  <div class="syh-metric-num" th:text="${item.m1_num}"></div>
+                  <div class="syh-metric-label" th:text="${not #strings.isEmpty(item.m1_label) ? item.m1_label : ''}"></div>
+                </div>
+                <div class="syh-metric-cell" th:if="${not #strings.isEmpty(item.m2_num)}">
+                  <div class="syh-metric-num" th:text="${item.m2_num}"></div>
+                  <div class="syh-metric-label" th:text="${not #strings.isEmpty(item.m2_label) ? item.m2_label : ''}"></div>
+                </div>
+                <div class="syh-metric-cell" th:if="${not #strings.isEmpty(item.m3_num)}">
+                  <div class="syh-metric-num" th:text="${item.m3_num}"></div>
+                  <div class="syh-metric-label" th:text="${not #strings.isEmpty(item.m3_label) ? item.m3_label : ''}"></div>
+                </div>
+                <div class="syh-metric-cell" th:if="${not #strings.isEmpty(item.m4_num)}">
+                  <div class="syh-metric-num" th:text="${item.m4_num}"></div>
+                  <div class="syh-metric-label" th:text="${not #strings.isEmpty(item.m4_label) ? item.m4_label : ''}"></div>
+                </div>
+              </div>
+              <th:block th:if="${not #strings.isEmpty(item.btn_text)}">
+                <a class="syh-btn syh-btn-outline" style="margin-top:24px"
+                   th:href="${not #strings.isEmpty(item.btn_url) ? item.btn_url : '/contact'}"
+                   th:text="${item.btn_text}"></a>
+              </th:block>
+            </div>
+          </div>
+        </div>
+      </section>
+    </th:block>
+
+    <!-- CTA 区（增加显示开关） -->
+    <section th:if="${b.cta.show_cta != false}" class="syh-cta-band">
+      <div class="syh-cta-band-bg" th:style="|background-image:url('${not #strings.isEmpty(b.cta.bg) ? b.cta.bg : '/themes/theme-dylan-mall/assets/images/company/mall-render.jpg'}')|"></div>
+      <div class="syh-cta-band-content">
+        <div class="syh-cta-eyebrow" th:text="${not #strings.isEmpty(b.cta.eyebrow) ? b.cta.eyebrow : '商务合作'}"></div>
+        <h2 class="syh-cta-title" th:text="${not #strings.isEmpty(b.cta.title) ? b.cta.title : '有意合作？欢迎联系我们'}"></h2>
+        <p class="syh-cta-sub" th:text="${not #strings.isEmpty(b.cta.sub) ? b.cta.sub : '期待与您展开深度合作，共创商业新价值'}"></p>
+        <div class="syh-cta-btns">
+          <a th:href="${not #strings.isEmpty(b.cta.btn1_url) ? b.cta.btn1_url : '/contact'}"
+             th:text="${not #strings.isEmpty(b.cta.btn1_text) ? b.cta.btn1_text : '立即联系 →'}"
+             class="syh-btn syh-btn-gold"></a>
+          <a th:href="${not #strings.isEmpty(b.cta.btn2_url) ? b.cta.btn2_url : '/about'}"
+             th:text="${not #strings.isEmpty(b.cta.btn2_text) ? b.cta.btn2_text : '了解集团'}"
+             class="syh-btn syh-btn-ghost"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 全局页脚 -->
+    <div th:replace="~{modules/syh-footer :: footer}"></div>
+
+  </div>
+  </th:block>
+  </th:block>
+
+  <div th:fragment="emptycont"></div>
+  <th:block th:fragment="emptybar"></th:block>
+</html>

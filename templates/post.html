@@ -1,0 +1,173 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  th:replace="~{modules/layout :: html(
+    title        = ${post.spec.title} + ' - ' + ${site.title},
+    hero         = ~{::hero},
+    content      = ~{::content},
+    head         = ~{::head},
+    footer       = null,
+    sidebar      = ~{::sidebar},
+    contentClass = ''
+  )}"
+>
+  <th:block th:fragment="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/assets/styles/company.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/styles/github-markdown.css}"/>
+  </th:block>
+
+  <!-- Hero 区：与新闻动态页风格一致，背景图可配置 -->
+  <th:block th:fragment="hero">
+    <th:block th:with="n=${theme.config.syh_news}">
+      <div class="news-hero">
+        <div class="news-hero-bg"
+             th:style="|background-image:url('${not #strings.isEmpty(n.hero.bg) ? n.hero.bg : '/themes/theme-dylan-mall/assets/images/company/mall-render.jpg'}')|"></div>
+        <div class="news-hero-overlay"></div>
+        <div class="news-hero-content">
+          <div class="news-hero-bc">
+            <a href="/">首页</a><span>/</span><a th:href="${not #strings.isEmpty(n.extra.news_page_slug) ? '/' + n.extra.news_page_slug : '/news-list'}">新闻动态</a><span>/</span>
+            <span th:text="${post.spec.title}"></span>
+          </div>
+          <h1><em th:text="${post.spec.title}"></em></h1>
+        </div>
+      </div>
+    </th:block>
+  </th:block>
+
+  <th:block th:fragment="content">
+    <div class="syh-reader-wrap" th:with="cursor = ${postFinder.cursor(post.metadata.name)}">
+
+      <!-- 返回链接 -->
+      <a class="syh-reader-back"
+         th:with="backUrl = ${not #strings.isEmpty(post.metadata.annotations['post_back_url'])
+                   ? post.metadata.annotations['post_back_url']
+                   : (not #strings.isEmpty(theme.config.syh.extra.news_page_slug)
+                      ? '/' + theme.config.syh.extra.news_page_slug
+                      : '/archives')}"
+         th:href="${backUrl}"
+         th:text="${not #strings.isEmpty(post.metadata.annotations['post_back_text'])
+                   ? post.metadata.annotations['post_back_text']
+                   : '返回新闻动态'}">
+        返回新闻动态
+      </a>
+
+      <div class="syh-reader-cats" th:if="${not #lists.isEmpty(post.categories)}">
+        <th:block th:each="cat : ${post.categories}">
+          <a class="syh-reader-cat" th:href="@{${cat.status.permalink}}" th:text="${cat.spec.displayName}"></a>
+        </th:block>
+      </div>
+
+      <!-- 文章标题（如果 Hero 区没有显示，这里可备用，但 Hero 区已显示，此处可隐藏或保留作为备选） -->
+      <h1 class="syh-reader-title" th:if="${#strings.isEmpty(post.spec.cover)}" style="display:none;" th:text="${post.spec.title}"></h1>
+
+      <div class="syh-reader-meta">
+        <span th:text="${#dates.format(post.spec.publishTime,'yyyy年MM月dd日')}"></span>
+        <span style="color:#ddd">·</span>
+        <span th:text="${post.stats?.visit ?: 0} + ' 次阅读'"></span>
+        <div sec:authorize="isAuthenticated()"
+             th:attr="x-data=|uiPermission('${#authentication.name}','system:posts:manage')|">
+          <template x-if="shouldDisplay">
+            <a class="syh-reader-meta-edit"
+               th:href="|/console/posts/editor?name=${post.metadata.name}&returnToView=true|">✏ 编辑</a>
+          </template>
+        </div>
+      </div>
+
+      <article class="syh-reader-content markdown-body" id="content" th:utext="${post.content.content}"></article>
+
+      <div class="syh-reader-tags" th:if="${not #lists.isEmpty(post.tags)}">
+        <th:block th:each="tag : ${post.tags}">
+          <a class="syh-reader-tag" th:href="@{${tag.status.permalink}}" th:text="|#${tag.spec.displayName}|"></a>
+        </th:block>
+      </div>
+
+      <div class="syh-reader-nav" th:if="${cursor.hasPrevious() or cursor.hasNext()}">
+        <a class="syh-reader-nav-item" th:if="${cursor.hasPrevious()}" th:href="@{${cursor.previous.status.permalink}}">
+          <span class="syh-reader-nav-label">← 上一篇</span>
+          <span class="syh-reader-nav-title" th:text="${#strings.abbreviate(cursor.previous.spec.title, 44)}"></span>
+        </a>
+        <div th:unless="${cursor.hasPrevious()}"></div>
+        <a class="syh-reader-nav-item next" th:if="${cursor.hasNext()}" th:href="@{${cursor.next.status.permalink}}">
+          <span class="syh-reader-nav-label">下一篇 →</span>
+          <span class="syh-reader-nav-title" th:text="${#strings.abbreviate(cursor.next.spec.title, 44)}"></span>
+        </a>
+        <div th:unless="${cursor.hasNext()}"></div>
+      </div>
+
+      <div class="syh-reader-comment" th:if="${haloCommentEnabled}" id="comment">
+        <div class="syh-reader-comment-title">评论</div>
+        <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}"/>
+      </div>
+
+    </div>
+  </th:block>
+
+  <!-- ========== 侧边栏片段 ========== -->
+  <th:block th:fragment="sidebar">
+    <th:block th:with="
+      n = ${theme.config.syh_news},
+      allCats = ${categoryFinder.listAsTree()},
+      allTags = ${tagFinder.listAll()},
+      recentPosts = ${postFinder.list(1,5)},
+      totalPosts = ${postFinder.list(1,1).total}
+    ">
+      <aside class="news-sidebar">
+        <!-- 文章分类模块 -->
+        <div th:if="${n.sidebar.show_categories != false and not #lists.isEmpty(allCats)}" class="sidebar-block">
+          <div class="sidebar-block-title" th:text="${not #strings.isEmpty(n.sidebar.categories_title) ? n.sidebar.categories_title : '文章分类'}">文章分类</div>
+          <div class="sidebar-block-body">
+            <ul class="sidebar-cat-list">
+              <li class="sidebar-cat-item"><a th:href="${not #strings.isEmpty(n.filter.all_news_btn_url) ? n.filter.all_news_btn_url : '/news-list'}"><span>全部动态</span><span class="sidebar-cat-count" th:text="${totalPosts}"></span></a></li>
+              <th:block th:each="cat : ${allCats}">
+                <li class="sidebar-cat-item">
+                  <a th:href="@{${cat.status.permalink}}"><span th:text="${cat.spec.displayName}"></span><span class="sidebar-cat-count" th:text="${cat.postCount ?: 0}"></span></a>
+                </li>
+              </th:block>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 最新动态模块 -->
+        <div th:if="${n.sidebar.show_recent != false and recentPosts.total gt 0}" class="sidebar-block">
+          <div class="sidebar-block-title" th:text="${not #strings.isEmpty(n.sidebar.recent_title) ? n.sidebar.recent_title : '最新动态'}">最新动态</div>
+          <div class="sidebar-block-body">
+            <div class="sidebar-recent">
+              <th:block th:each="p : ${recentPosts.items}">
+                <div class="sidebar-recent-item">
+                  <th:block th:if="${not #strings.isEmpty(p.spec.cover)}"><img class="sidebar-recent-img" th:src="${p.spec.cover}" th:alt="${p.spec.title}"></th:block>
+                  <th:block th:if="${#strings.isEmpty(p.spec.cover)}"><div class="sidebar-recent-no-img">📰</div></th:block>
+                  <div>
+                    <a class="sidebar-recent-title" th:href="@{${p.status.permalink}}" th:text="${p.spec.title}"></a>
+                    <div class="sidebar-recent-date" th:text="${#dates.format(p.spec.publishTime,'yyyy-MM-dd')}"></div>
+                  </div>
+                </div>
+              </th:block>
+            </div>
+          </div>
+        </div>
+
+        <!-- 标签云模块 -->
+        <div th:if="${n.sidebar.show_tags != false and not #lists.isEmpty(allTags)}" class="sidebar-block">
+          <div class="sidebar-block-title" th:text="${not #strings.isEmpty(n.sidebar.tags_title) ? n.sidebar.tags_title : '标签云'}">标签云</div>
+          <div class="sidebar-block-body">
+            <div class="sidebar-tags">
+              <th:block th:each="tag : ${allTags}">
+                <a class="sidebar-tag" th:href="@{${tag.status.permalink}}" th:text="|#${tag.spec.displayName}|"></a>
+              </th:block>
+            </div>
+          </div>
+        </div>
+
+        <!-- 历史归档模块 -->
+        <div th:if="${n.sidebar.show_archive != false}" class="sidebar-block">
+          <div class="sidebar-block-title" th:text="${not #strings.isEmpty(n.sidebar.archive_title) ? n.sidebar.archive_title : '历史归档'}">历史归档</div>
+          <div class="sidebar-block-body">
+            <a th:href="${not #strings.isEmpty(n.filter.sidebar_archive_url) ? n.filter.sidebar_archive_url : '/archives'}" class="syh-btn syh-btn-outline" style="width:100%;justify-content:center;font-size:13px;padding:10px" th:text="${not #strings.isEmpty(n.filter.sidebar_archive_text) ? n.filter.sidebar_archive_text : '查看全部归档 →'}">查看全部归档 →</a>
+          </div>
+        </div>
+      </aside>
+    </th:block>
+  </th:block>
+</html>

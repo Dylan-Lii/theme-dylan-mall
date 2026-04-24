@@ -1,0 +1,171 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+<div th:fragment="footer" class="syh-footer-wrap">
+  <th:block th:with="s=${theme.config.syh}, g=${theme.config.global}, b=${theme.config.beian}">
+
+    <!-- CTA 条 -->
+    <div class="syh-footer-cta-bar">
+      <div class="syh-footer-cta-bar-text">
+        <th:block th:text="${not #strings.isEmpty(g.footer.cta_text) ? g.footer.cta_text : '携手上悦汇，共创商业新价值'}"/>
+        <span th:text="${not #strings.isEmpty(g.footer.cta_sub) ? g.footer.cta_sub : '欢迎品牌商户洽谈入驻，共创区域商业繁荣'}"></span>
+      </div>
+      <a th:href="${not #strings.isEmpty(g.footer.cta_btn_url) ? g.footer.cta_btn_url : '/contact'}"
+         th:text="${not #strings.isEmpty(g.footer.cta_btn_text) ? g.footer.cta_btn_text : '立即联系招商团队 →'}"
+         class="syh-footer-cta-btn"></a>
+    </div>
+
+    <div class="syh-footer-main">
+      <div class="syh-footer-grid">
+
+        <!-- 列1：公司信息栏 -->
+        <div th:if="${g.footer.show_brand != false}" class="syh-footer-brand">
+          <div class="syh-footer-logo-wrap">
+            <th:block th:if="${not #strings.isEmpty(site.logo)}">
+              <img class="syh-footer-logo" th:src="${site.logo}" th:alt="${site.title}">
+            </th:block>
+            <span class="syh-footer-brand-name" 
+                  th:text="${not #strings.isEmpty(g.footer.brand_name) ? g.footer.brand_name : site.title}">上悦汇集团</span>
+          </div>
+
+          <!-- 副标题（样式与主标题完全一致，增加下边距） -->
+          <div th:if="${not #strings.isEmpty(g.footer.subtitle)}" class="syh-footer-brand-name" 
+               style="margin-bottom: 12px;"
+               th:text="${g.footer.subtitle}"></div>
+
+          <!-- 品牌副标语 -->
+          <div class="syh-footer-brand-sub"
+               th:text="${not #strings.isEmpty(g.footer.brand_sub) ? g.footer.brand_sub : '粤港澳大湾区商业运营专家'}"></div>
+
+          <!-- 公司简介：仅当有内容时才显示 -->
+          <p th:if="${not #strings.isEmpty(g.footer.desc)}" class="syh-footer-brand-desc"
+             th:text="${g.footer.desc}"></p>
+
+          <div class="syh-footer-contact-list">
+            <div class="syh-footer-contact-item">
+              <span class="syh-footer-contact-icon">📞</span>
+              <a th:href="'tel:' + ${not #strings.isEmpty(g.footer.phone) ? g.footer.phone : '0769-0000-0000'}"
+                 th:text="${not #strings.isEmpty(g.footer.phone) ? g.footer.phone : '0769-0000-0000'}"></a>
+            </div>
+            <div class="syh-footer-contact-item">
+              <span class="syh-footer-contact-icon">✉️</span>
+              <a th:href="'mailto:' + ${not #strings.isEmpty(g.footer.email) ? g.footer.email : 'contact@shangyuehui.com'}"
+                 th:text="${not #strings.isEmpty(g.footer.email) ? g.footer.email : 'contact@shangyuehui.com'}"></a>
+            </div>
+            <div class="syh-footer-contact-item">
+              <span class="syh-footer-contact-icon">📍</span>
+              <span th:text="${not #strings.isEmpty(g.footer.address) ? g.footer.address : '广东省东莞市'}"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 列2：快速导航栏一 -->
+        <div th:if="${g.footer.show_nav1 != false}">
+          <div class="syh-footer-col-title" th:text="${not #strings.isEmpty(g.footer.nav1_title) ? g.footer.nav1_title : '快速导航'}"></div>
+          <div class="syh-footer-col-links"
+               th:with="nav1Menu = ${not #strings.isEmpty(g.footer.nav1_menu) ? menuFinder.getByName(g.footer.nav1_menu) : menuFinder.getPrimary()}">
+            <th:block th:if="${nav1Menu != null}" th:each="item : ${nav1Menu.menuItems}">
+              <a th:href="@{${item.status.href}}" th:text="${item.status.displayName}"></a>
+            </th:block>
+            <th:block th:if="${nav1Menu == null}">
+              <a href="/">主页</a>
+              <a href="/business">核心业务</a>
+              <a th:href="${not #strings.isEmpty(s.extra.news_page_slug) ? '/' + s.extra.news_page_slug : '/news-list'}">新闻动态</a>
+              <a href="/about">关于我们</a>
+              <a href="/contact">联系我们</a>
+            </th:block>
+          </div>
+        </div>
+
+        <!-- 列3：快速导航栏二 -->
+        <div th:if="${g.footer.show_nav2 != false}">
+          <div class="syh-footer-col-title" th:text="${not #strings.isEmpty(g.footer.nav2_title) ? g.footer.nav2_title : '核心业务'}"></div>
+          <div class="syh-footer-col-links"
+               th:with="nav2Menu = ${not #strings.isEmpty(g.footer.nav2_menu) ? menuFinder.getByName(g.footer.nav2_menu) : null}">
+            <th:block th:if="${nav2Menu != null}" th:each="item : ${nav2Menu.menuItems}">
+              <a th:href="@{${item.status.href}}" th:text="${item.status.displayName}"></a>
+            </th:block>
+            <th:block th:if="${nav2Menu == null}">
+              <p style="color:rgba(255,255,255,0.5); font-size:0.8rem;">请在主题设置中选择菜单</p>
+            </th:block>
+          </div>
+        </div>
+
+        <!-- 列4：二维码栏 -->
+        <div th:if="${g.footer.show_qr != false}">
+          <div class="syh-footer-col-title" th:text="${not #strings.isEmpty(g.footer.qr_title) ? g.footer.qr_title : '关注我们'}" style="text-align: center !important;"></div>
+          <div class="syh-footer-qr-grid" style="display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; margin-top: 0.5rem !important;">
+            <!-- 微信 -->
+            <div th:if="${not #strings.isEmpty(g.footer.qr_wechat)}" class="syh-footer-qr-item" style="display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; width: 100% !important;">
+              <img th:src="${g.footer.qr_wechat}" alt="微信二维码" class="syh-footer-qr-img" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: #fff; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
+              <span style="display: block !important; font-size: 0.8rem !important; color: #ffffff !important; font-weight: 700 !important; text-shadow: 0 1px 1px rgba(0,0,0,0.3) !important;" th:text="${not #strings.isEmpty(g.footer.qr_wechat_text) ? g.footer.qr_wechat_text : '微信'}">微信</span>
+            </div>
+            <!-- 抖音 -->
+            <div th:if="${not #strings.isEmpty(g.footer.qr_douyin)}" class="syh-footer-qr-item" style="display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; width: 100% !important;">
+              <img th:src="${g.footer.qr_douyin}" alt="抖音二维码" class="syh-footer-qr-img" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: #fff; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
+              <span style="display: block !important; font-size: 0.8rem !important; color: #ffffff !important; font-weight: 700 !important; text-shadow: 0 1px 1px rgba(0,0,0,0.3) !important;" th:text="${not #strings.isEmpty(g.footer.qr_douyin_text) ? g.footer.qr_douyin_text : '抖音'}">抖音</span>
+            </div>
+            <!-- 小红书 -->
+            <div th:if="${not #strings.isEmpty(g.footer.qr_xiaohongshu)}" class="syh-footer-qr-item" style="display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; width: 100% !important;">
+              <img th:src="${g.footer.qr_xiaohongshu}" alt="小红书二维码" class="syh-footer-qr-img" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: #fff; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
+              <span style="display: block !important; font-size: 0.8rem !important; color: #ffffff !important; font-weight: 700 !important; text-shadow: 0 1px 1px rgba(0,0,0,0.3) !important;" th:text="${not #strings.isEmpty(g.footer.qr_xiaohongshu_text) ? g.footer.qr_xiaohongshu_text : '小红书'}">小红书</span>
+            </div>
+            <!-- 其他 -->
+            <div th:if="${not #strings.isEmpty(g.footer.qr_other)}" class="syh-footer-qr-item" style="display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; width: 100% !important;">
+              <img th:src="${g.footer.qr_other}" alt="其他二维码" class="syh-footer-qr-img" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: #fff; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 0.5rem;">
+              <span style="display: block !important; font-size: 0.8rem !important; color: #ffffff !important; font-weight: 700 !important; text-shadow: 0 1px 1px rgba(0,0,0,0.3) !important;" th:text="${not #strings.isEmpty(g.footer.qr_other_text) ? g.footer.qr_other_text : '其他'}">其他</span>
+            </div>
+          </div>
+          <p class="syh-footer-qr-note" style="font-size: 0.8rem !important; color: #ffffff !important; margin-top: 0.75rem !important; font-weight: 500 !important; text-shadow: 0 1px 1px rgba(0,0,0,0.3) !important; text-align: center !important;" th:text="${not #strings.isEmpty(g.footer.qr_note) ? g.footer.qr_note : '扫码关注，获取最新资讯'}"></p>
+        </div>
+
+      </div><!-- /.syh-footer-grid -->
+
+      <!-- 版权 + 备案（动态读取主题设置中的备案信息） -->
+      <div class="syh-footer-bottom">
+        <div class="syh-footer-copy">
+          <!-- 电脑端一行居中，移动端公司名称换行 -->
+          <div class="syh-copyright-wrapper"
+               th:with="company1=${not #strings.isEmpty(g.footer.company_name_1) ? g.footer.company_name_1 : '广东上悦汇商业经营管理有限公司'},
+                         company2=${not #strings.isEmpty(g.footer.company_name_2) ? g.footer.company_name_2 : '深圳市好万达商贸有限公司东莞分公司'},
+                         icpText=${not #strings.isEmpty(b.icp_text) ? b.icp_text : '粤ICP备2024219634号'},
+                         gonganText=${not #strings.isEmpty(b.gongan_text) ? b.gongan_text : '2024219634号'}">
+            <!-- 公司名称部分 -->
+            <div class="syh-company-names">
+              <div th:if="${not #strings.isEmpty(company1)}">© 2026 <span th:text="${company1}">广东上悦汇商业经营管理有限公司</span></div>
+              <span class="company-separator" th:if="${not #strings.isEmpty(company1) and not #strings.isEmpty(company2)}">·</span>
+              <div th:if="${not #strings.isEmpty(company2)}"><span th:text="${company2}">深圳市好万达商贸有限公司东莞分公司</span></div>
+            </div>
+            <!-- 备案信息部分 -->
+            <div class="syh-beian-info">
+              <th:block th:if="${not #strings.isEmpty(b.gongan_text)}">
+                <a th:href="${not #strings.isEmpty(b.gongan_link) ? b.gongan_link : 'https://beian.mps.gov.cn/#/query/webSearch'}"
+                   target="_blank" rel="noopener noreferrer"
+                   style="color:rgba(255,255,255,.22); text-decoration:none; display:inline-flex; align-items:center; gap:0.35rem;"
+                   >
+                  <img src="/themes/theme-dylan-mall/assets/images/gongan_beian.png" alt="公安联网备案" style="width:16px;height:16px;vertical-align:middle;" />
+                  <span th:text="${b.gongan_text}">2024219634号</span>
+                </a>
+              </th:block>
+              <th:block th:if="${not #strings.isEmpty(b.gongan_text) and not #strings.isEmpty(b.icp_text)}">
+                <span> · </span>
+              </th:block>
+              <th:block th:if="${not #strings.isEmpty(b.icp_text)}">
+                <a th:href="${not #strings.isEmpty(b.icp_link) ? b.icp_link : 'https://beian.miit.gov.cn/'}"
+                   target="_blank" rel="noopener noreferrer"
+                   style="color:rgba(255,255,255,.22); text-decoration:none;"
+                   th:text="${b.icp_text}">粤ICP备2024219634号</a>
+              </th:block>
+            </div>
+          </div>
+
+          <!-- 保留 Halo 原生的页脚输出（可选，通常为空） -->
+          <halo:footer/>
+        </div>
+      </div>
+
+    </div><!-- /.syh-footer-main -->
+  </th:block>
+</div><!-- /.syh-footer-wrap -->
+</body>
+</html>
